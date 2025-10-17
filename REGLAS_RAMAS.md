@@ -30,9 +30,6 @@ La rama `develop` es el punto de integración de las ramas `feature`. Aquí se r
 
 ### ✅ Configuraciones activadas:
 
-- **Require a pull request before merging**  
-  Se requiere un _pull request_ para integrar cambios. Esto evita errores accidentales y fomenta la revisión entre compañeros.
-
 - **Require status checks to pass before merging**  
   Si existen pruebas automáticas (como tests o validaciones), deben completarse correctamente antes de permitir el _merge_. Esto asegura que el código no rompa funcionalidades existentes.
 

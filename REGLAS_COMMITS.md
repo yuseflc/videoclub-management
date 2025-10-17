@@ -20,12 +20,6 @@ Los commits deben ser breves pero descriptivos. Usa verbos en infinitivo y expli
 - test: añadir o modificar pruebas
 - chore: tareas menores (configuración, limpieza, etc.)
 
-**Ejemplos:**
-
-feat: añadir validación de email en formulario  
-fix: corregir error al mostrar mensajes de error  
-refactor: simplificar lógica de validación de campos
-
 ## Mensajes de pull request
 
 Los pull requests deben tener un título claro y una descripción que explique los cambios realizados.
