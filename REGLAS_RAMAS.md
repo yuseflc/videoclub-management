@@ -1,14 +1,14 @@
-# 🛡️ Reglas de protección de ramas
+# Reglas de protección de ramas
 
 Este documento describe las configuraciones de protección aplicadas a las ramas `main` y `develop` en este proyecto colaborativo. El objetivo es mantener un flujo de trabajo ordenado, evitar errores accidentales y facilitar la colaboración entre los miembros del equipo, en este caso entre David Lopez Ferreras y Yusef Laroussi de la Calle.
 
 ---
 
-## 🔹 Rama `main`
+## Rama `main`
 
 La rama `main` representa la versión estable del proyecto. No se realizan cambios directos en ella. Todos los cambios deben llegar desde `develop` mediante _pull requests_.
 
-### ✅ Configuraciones activadas:
+### Configuraciones activadas:
 
 - **Require a pull request before merging**  
   Se requiere un _pull request_ para integrar cambios. Esto evita que se hagan modificaciones directas a la rama `main`.
@@ -24,11 +24,11 @@ La rama `main` representa la versión estable del proyecto. No se realizan cambi
 
 ---
 
-## 🔸 Rama `develop`
+## Rama `develop`
 
 La rama `develop` es el punto de integración de las ramas `feature`. Aquí se revisan y prueban los cambios antes de pasar a `main`.
 
-### ✅ Configuraciones activadas:
+### Configuraciones activadas:
 
 - **Require status checks to pass before merging**  
   Si existen pruebas automáticas (como tests o validaciones), deben completarse correctamente antes de permitir el _merge_. Esto asegura que el código no rompa funcionalidades existentes.
@@ -38,7 +38,7 @@ La rama `develop` es el punto de integración de las ramas `feature`. Aquí se r
 
 ---
 
-## 📌 Recomendaciones generales
+## Recomendaciones generales
 
 - Antes de hacer _merge_, actualizar la rama con los últimos cambios de `develop`.
 - Resolver conflictos en la rama `feature`, no en `develop` ni `main`.
