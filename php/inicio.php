@@ -6,6 +6,8 @@ Aquí pruebo que las clases funcionen correctamente y muestren toda la informaci
 //Incluyo las clases que voy a usar
 include "Soporte.php";
 include "CintaVideo.php";
+include "Dvd.php";
+include "Juego.php";
 
 //Primera prueba: creo un soporte genérico para ver si funciona la clase base
 echo "<h2>Prueba de la clase Soporte</h2>";
@@ -28,4 +30,20 @@ echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
 //Llamo al método muestraResumen() que he sobrescrito en CintaVideo
 //Este método primero llama al del padre y luego añade la duración
 $miCinta->muestraResumen();
+
+//Tercera prueba: pruebo la clase Dvd
+echo "<h2>Prueba de la clase Dvd</h2>";
+$miDvd = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
+echo "<strong>" . $miDvd->titulo . "</strong>"; 
+echo "<br>Precio: " . $miDvd->getPrecio() . " euros"; 
+echo "<br>Precio IVA incluido: " . $miDvd->getPrecioConIva() . " euros";
+$miDvd->muestraResumen();
+
+//Cuarta prueba: pruebo la clase Juego
+echo "<h2>Prueba de la clase Juego</h2>";
+$miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1); 
+echo "<strong>" . $miJuego->titulo . "</strong>"; 
+echo "<br>Precio: " . $miJuego->getPrecio() . " euros"; 
+echo "<br>Precio IVA incluido: " . $miJuego->getPrecioConIva() . " euros";
+$miJuego->muestraResumen();
 ?>
