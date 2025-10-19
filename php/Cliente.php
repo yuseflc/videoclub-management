@@ -51,19 +51,22 @@ class Cliente implements Resumible {
         }
         return false; //Si no lo encuentra, devuelvo false
     }
-    
     //Método para alquilar un soporte
+    //He modificado este método para que devuelva $this y así poder encadenar métodos
+    //Esto permite hacer llamadas como: $cliente->alquilar($soporte1)->alquilar($soporte2)
     public function alquilar(Soporte $s) {
         //Compruebo si ya tiene alquilado este soporte
         if ($this->tieneAlquilado($s)) {
             echo "<br>El cliente ya tiene alquilado el soporte: " . $s->titulo . "<br>";
-            return false;
+            //Devuelvo $this incluso si hay error, para mantener la cadena
+            return $this;
         }
         
         //Compruebo si ha superado el cupo de alquileres
         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
             echo "<br>Este cliente tiene " . count($this->soportesAlquilados) . " elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo.<br>";
-            return false;
+            //Devuelvo $this incluso si hay error, para mantener la cadena
+            return $this;
         }
         
         //Si pasa las comprobaciones, alquilo el soporte
@@ -71,10 +74,13 @@ class Cliente implements Resumible {
         $this->numSoportesAlquilados++; //Incremento el contador
         echo "<br>Alquilado soporte a: " . $this->nombre . "<br>";
         echo $s->titulo . "<br>";
-        return true;
+        //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
+        return $this;
     }
     
     //Método para devolver un soporte
+    //He modificado este método para que devuelva $this y así poder encadenar métodos
+    //Esto permite hacer llamadas como: $cliente->devolver(1)->devolver(2)->alquilar($soporte)
     public function devolver($numSoporte) {
         //Recorro el array de soportes alquilados
         foreach ($this->soportesAlquilados as $indice => $soporte) {
@@ -84,12 +90,14 @@ class Cliente implements Resumible {
                 //Reindexo el array para evitar huecos
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 echo "<br>Devuelto soporte: " . $soporte->titulo . "<br>";
-                return true;
+                //Devuelvo $this para permitir el encadenamiento de métodos
+                return $this;
             }
         }
         //Si no lo encuentra, muestro mensaje
         echo "<br>No se ha podido encontrar el soporte en los alquileres de este cliente<br>";
-        return false;
+        //Devuelvo $this incluso si hay error, para mantener la cadena
+        return $this;
     }
     
     //Método para listar los alquileres del cliente

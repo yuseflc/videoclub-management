@@ -71,6 +71,8 @@ class Videoclub {
     }
     
     //Método para alquilar un soporte a un socio
+    //He modificado este método para que devuelva $this y así poder encadenar métodos
+    //Esto permite hacer llamadas como: $videoclub->alquilaSocioProducto(1,1)->alquilaSocioProducto(1,2)
     public function alquilaSocioProducto($numeroCliente, $numeroSoporte) {
         //Busco el cliente
         $cliente = null;
@@ -84,7 +86,8 @@ class Videoclub {
         //Si no encuentro el cliente
         if ($cliente == null) {
             echo "<br>No existe el cliente con número " . $numeroCliente . "<br>";
-            return;
+            //Devuelvo $this incluso si hay error, para mantener la cadena
+            return $this;
         }
         
         //Busco el soporte
@@ -99,11 +102,14 @@ class Videoclub {
         //Si no encuentro el soporte
         if ($soporte == null) {
             echo "<br>No existe el soporte con número " . $numeroSoporte . "<br>";
-            return;
+            //Devuelvo $this incluso si hay error, para mantener la cadena
+            return $this;
         }
         
         //Si encuentro ambos, alquilo
         $cliente->alquilar($soporte);
+        //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
+        return $this;
     }
 }
 
