@@ -1,6 +1,10 @@
 <?php
-//Creo la clase Cliente
-class Cliente {
+
+//Incluyo la interfaz Resumible
+include_once "Resumible.php";
+
+//Creo la clase Cliente que implementa Resumible
+class Cliente implements Resumible {
     public $nombre;
     private $numero;
     private $soportesAlquilados = []; //Array que guarda los soportes alquilados

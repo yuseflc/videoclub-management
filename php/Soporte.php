@@ -1,10 +1,15 @@
 <?php
 
-/* He creado esta clase Soporte que representa un soporte genérico del videoclub
-Puede ser una cinta, un DVD, un juego, etc. Aquí guardo el título, número y precio
-Solo he puesto getters, no setters, porque no quiero que se modifiquen después de crear el objeto */
+//Incluyo la interfaz Resumible
+include_once "Resumible.php";
 
-class Soporte {
+/* He creado esta clase abstracta Soporte que representa un soporte genérico del videoclub
+Puede ser una cinta, un DVD, un juego, etc. Aquí guardo el título, número y precio
+Solo he puesto getters, no setters, porque no quiero que se modifiquen después de crear el objeto
+Al ser abstracta, no se puede instanciar directamente, solo se usa como base para otras clases
+Implementa la interfaz Resumible, por lo que debe tener el método muestraResumen */
+
+abstract class Soporte implements Resumible {
     //Defino las propiedades del soporte
     public $titulo;      //Lo dejo público para acceder directamente desde fuera
     private $numero;     //Este lo hago privado, solo se accede por el getter

@@ -9,15 +9,16 @@ include "CintaVideo.php";
 include "Dvd.php";
 include "Juego.php";
 
-//Primera prueba: creo un soporte genérico para ver si funciona la clase base
-echo "<h2>Prueba de la clase Soporte</h2>";
-$soporte1 = new Soporte("Tenet", 22, 3); 
-echo "<strong>" . $soporte1->titulo . "</strong>"; 
-echo "<br>Precio: " . $soporte1->getPrecio() . " euros"; 
-echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
-$soporte1->muestraResumen();
+//NOTA: Ya no puedo crear objetos Soporte directamente porque ahora es una clase abstracta
+//Solo puedo crear objetos de las clases hijas: CintaVideo, Dvd o Juego
+//echo "<h2>Prueba de la clase Soporte</h2>";
+//$soporte1 = new Soporte("Tenet", 22, 3); // Esto daría error
+//echo "<strong>" . $soporte1->titulo . "</strong>"; 
+//echo "<br>Precio: " . $soporte1->getPrecio() . " euros"; 
+//echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
+//$soporte1->muestraResumen();
 
-//Segunda prueba: ahora pruebo la clase CintaVideo que hereda de Soporte
+//Primera prueba: pruebo la clase CintaVideo que hereda de Soporte
 //He añadido la duración como nuevo atributo específico de las cintas
 echo "<h2>Prueba de la clase CintaVideo</h2>";
 $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
