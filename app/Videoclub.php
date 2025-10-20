@@ -4,12 +4,7 @@
 //He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
 namespace Dwes\ProyectoVideoclub;
 
-//Incluyo las clases necesarias
-include_once "Soporte.php";
-include_once "CintaVideo.php";
-include_once "Dvd.php";
-include_once "Juego.php";
-include_once "Cliente.php";
+//Ya no necesito incluir las clases porque el autoload las cargará automáticamente
 
 //Creo la clase Videoclub
 class Videoclub {

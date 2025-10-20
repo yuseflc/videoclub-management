@@ -4,10 +4,7 @@
 //He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
 namespace Dwes\ProyectoVideoclub;
 
-//Incluyo la interfaz Resumible porque Cliente la implementa
-include_once "Resumible.php";
-//Incluyo Soporte porque lo uso como tipo en los parámetros de los métodos
-include_once "Soporte.php";
+//Ya no necesito incluir las clases porque el autoload las cargará automáticamente
 
 //Creo la clase Cliente que implementa Resumible
 class Cliente implements Resumible {

@@ -7,8 +7,7 @@ namespace Dwes\ProyectoVideoclub;
 /* He creado esta clase CintaVideo que hereda de Soporte 
 Aquí añado la duración de la película, que es específica de las cintas de vídeo */
 
-//Incluyo la clase padre Soporte para poder heredar de ella
-include_once "Soporte.php";
+//Ya no necesito incluir Soporte.php porque el autoload cargará automáticamente las clases
 
 class CintaVideo extends Soporte {
     //Añado la duración como atributo privado específico de las cintas

@@ -1,16 +1,17 @@
 <?php
 
-/* ============================================================================
-   ESTE ARCHIVO YA NO FUNCIONA CORRECTAMENTE
-   
-   Las clases ahora usan namespaces (Dwes\ProyectoVideoclub) pero este
-   archivo no tiene los 'use' statements necesarios para importarlas.
-   
-   Hay que usar el archivo inicio3.php que está en el raíz del proyecto,
-   que sí tiene correctamente configurados los namespaces con 'use'.
-   ============================================================================ */
+/* 
+Archivo de prueba para la clase Videoclub con encadenamiento de métodos
+Ahora uso autoload.php para cargar las clases automáticamente
+*/
 
-include_once "Videoclub.php"; // No incluimos nada más
+//Incluyo el autoload que se encarga de cargar automáticamente todas las clases
+//El autoload ya incluye todas las clases que necesita Videoclub
+include '../autoload.php';
+
+//Importo la clase Videoclub del namespace Dwes\ProyectoVideoclub usando 'use'
+//Esto me permite usar el nombre sin cualificar (sin poner el namespace completo)
+use Dwes\ProyectoVideoclub\Videoclub;
 
 $vc = new Videoclub("Severo 8A"); 
 
@@ -30,6 +31,7 @@ $vc->listarProductos();
 $vc->incluirSocio("Amancio Ortega"); 
 $vc->incluirSocio("Pablo Picasso", 2); 
 
+//Uso encadenamiento de métodos para alquilar varios productos al socio 1
 $vc->alquilaSocioProducto(1,2)->alquilaSocioProducto(1,3);
 //alquilo otra vez el soporte 2 al socio 1. 
 // no debe dejarme porque ya lo tiene alquilado 

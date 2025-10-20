@@ -1,32 +1,23 @@
 <?php
 
-/* ============================================================================
-   ESTE ARCHIVO YA NO FUNCIONA CORRECTAMENTE
-   
-   Las clases ahora usan namespaces (Dwes\ProyectoVideoclub) pero este
-   archivo no tiene los 'use' statements necesarios para importarlas.
-   
-   Hay que usar el archivo inicio.php que está en el raíz del proyecto,
-   que sí tiene correctamente configurados los namespaces con 'use'.
-   ============================================================================ */
+/* 
+Archivo de prueba para las clases Soporte y CintaVideo
+Aquí pruebo que las clases funcionen correctamente y muestren toda la información
+Ahora uso autoload.php para cargar las clases automáticamente
+*/
 
-/* Archivo de prueba para las clases Soporte y CintaVideo
-Aquí pruebo que las clases funcionen correctamente y muestren toda la información */
+//Incluyo el autoload que se encarga de cargar automáticamente todas las clases
+//Ya no necesito hacer include de cada clase individualmente
+include '../autoload.php';
 
-//Incluyo las clases que voy a usar
-include "Soporte.php";
-include "CintaVideo.php";
-include "Dvd.php";
-include "Juego.php";
+//Importo las clases del namespace Dwes\ProyectoVideoclub usando 'use'
+//Esto me permite usar los nombres sin cualificar (sin poner el namespace completo)
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
 
 //NOTA: Ya no puedo crear objetos Soporte directamente porque ahora es una clase abstracta
 //Solo puedo crear objetos de las clases hijas: CintaVideo, Dvd o Juego
-//echo "<h2>Prueba de la clase Soporte</h2>";
-//$soporte1 = new Soporte("Tenet", 22, 3); // Esto daría error
-//echo "<strong>" . $soporte1->titulo . "</strong>"; 
-//echo "<br>Precio: " . $soporte1->getPrecio() . " euros"; 
-//echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
-//$soporte1->muestraResumen();
 
 //Primera prueba: pruebo la clase CintaVideo que hereda de Soporte
 //He añadido la duración como nuevo atributo específico de las cintas
@@ -42,7 +33,7 @@ echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
 //Este método primero llama al del padre y luego añade la duración
 $miCinta->muestraResumen();
 
-//Tercera prueba: pruebo la clase Dvd
+//Segunda prueba: pruebo la clase Dvd
 echo "<h2>Prueba de la clase Dvd</h2>";
 $miDvd = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
 echo "<strong>" . $miDvd->titulo . "</strong>"; 
@@ -50,7 +41,7 @@ echo "<br>Precio: " . $miDvd->getPrecio() . " euros";
 echo "<br>Precio IVA incluido: " . $miDvd->getPrecioConIva() . " euros";
 $miDvd->muestraResumen();
 
-//Cuarta prueba: pruebo la clase Juego
+//Tercera prueba: pruebo la clase Juego
 echo "<h2>Prueba de la clase Juego</h2>";
 $miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1); 
 echo "<strong>" . $miJuego->titulo . "</strong>"; 

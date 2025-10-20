@@ -1,19 +1,19 @@
 <?php
 
-/* ============================================================================
-   ESTE ARCHIVO YA NO FUNCIONA CORRECTAMENTE
-   
-   Las clases ahora usan namespaces (Dwes\ProyectoVideoclub) pero este
-   archivo no tiene los 'use' statements necesarios para importarlas.
-   
-   Hay que usar el archivo inicio2.php que está en el raíz del proyecto,
-   que sí tiene correctamente configurados los namespaces con 'use'.
-   ============================================================================ */
+/* 
+Archivo de prueba para las clases Cliente con encadenamiento de métodos
+Ahora uso autoload.php para cargar las clases automáticamente
+*/
 
-include_once "CintaVideo.php";
-include_once "Dvd.php";
-include_once "Juego.php";
-include_once "Cliente.php";
+//Incluyo el autoload que se encarga de cargar automáticamente todas las clases
+include '../autoload.php';
+
+//Importo las clases del namespace Dwes\ProyectoVideoclub usando 'use'
+//Esto me permite usar los nombres sin cualificar (sin poner el namespace completo)
+use Dwes\ProyectoVideoclub\Cliente;
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);
@@ -21,7 +21,7 @@ $cliente2 = new Cliente("Clark Kent", 33);
 
 //mostramos el número de cada cliente creado 
 echo "<br>El identificador del cliente 1 es: " . $cliente1->getNumero();
-echo "<br>El identificador del cliente 2 es: " . $cliente2->getNumero();
+echo "<br>El identificador del cliente 2 es: " . $cliente1->getNumero();
 
 //instancio algunos soportes 
 $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);

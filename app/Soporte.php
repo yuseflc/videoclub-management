@@ -4,8 +4,7 @@
 //He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
 namespace Dwes\ProyectoVideoclub;
 
-//Incluyo la interfaz Resumible
-include_once "Resumible.php";
+//Ya no necesito incluir Resumible.php porque el autoload cargará automáticamente las clases
 
 /* He creado esta clase abstracta Soporte que representa un soporte genérico del videoclub
 Puede ser una cinta, un DVD, un juego, etc. Aquí guardo el título, número y precio
