@@ -1,19 +1,20 @@
 <?php
 
-/* ============================================================================
-   ESTE ARCHIVO YA NO FUNCIONA CORRECTAMENTE
-   
-   Las clases ahora usan namespaces (Dwes\ProyectoVideoclub) pero este
-   archivo no tiene los 'use' statements necesarios para importarlas.
-   
-   Hay que usar el archivo inicio2.php que está en el raíz del proyecto,
-   que sí tiene correctamente configurados los namespaces con 'use'.
-   ============================================================================ */
+/* Archivo de prueba para las clases Cliente con encadenamiento de métodos
+Este archivo está en el raíz (sin namespace) y usa 'use' para importar las clases del namespace */
 
-include_once "CintaVideo.php";
-include_once "Dvd.php";
-include_once "Juego.php";
-include_once "Cliente.php";
+//Importo las clases del namespace Dwes\ProyectoVideoclub usando 'use'
+//Esto me permite usar los nombres sin cualificar (sin poner el namespace completo)
+use Dwes\ProyectoVideoclub\Cliente;
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
+
+//Incluyo las clases que necesito desde la carpeta php
+include_once "php/CintaVideo.php";
+include_once "php/Dvd.php";
+include_once "php/Juego.php";
+include_once "php/Cliente.php";
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);

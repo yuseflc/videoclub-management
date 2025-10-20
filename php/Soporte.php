@@ -1,5 +1,9 @@
 <?php
 
+//Declaro el namespace donde está esta clase
+//He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
+namespace Dwes\ProyectoVideoclub;
+
 //Incluyo la interfaz Resumible
 include_once "Resumible.php";
 

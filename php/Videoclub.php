@@ -1,5 +1,9 @@
 <?php
 
+//Declaro el namespace donde está esta clase
+//He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
+namespace Dwes\ProyectoVideoclub;
+
 //Incluyo las clases necesarias
 include_once "Soporte.php";
 include_once "CintaVideo.php";

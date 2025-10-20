@@ -1,32 +1,23 @@
 <?php
 
-/* ============================================================================
-   ESTE ARCHIVO YA NO FUNCIONA CORRECTAMENTE
-   
-   Las clases ahora usan namespaces (Dwes\ProyectoVideoclub) pero este
-   archivo no tiene los 'use' statements necesarios para importarlas.
-   
-   Hay que usar el archivo inicio.php que está en el raíz del proyecto,
-   que sí tiene correctamente configurados los namespaces con 'use'.
-   ============================================================================ */
-
 /* Archivo de prueba para las clases Soporte y CintaVideo
-Aquí pruebo que las clases funcionen correctamente y muestren toda la información */
+Aquí pruebo que las clases funcionen correctamente y muestren toda la información
+Este archivo está en el raíz (sin namespace) y usa 'use' para importar las clases del namespace */
 
-//Incluyo las clases que voy a usar
-include "Soporte.php";
-include "CintaVideo.php";
-include "Dvd.php";
-include "Juego.php";
+//Importo las clases del namespace Dwes\ProyectoVideoclub usando 'use'
+//Esto me permite usar los nombres sin cualificar (sin poner el namespace completo)
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
+
+//Incluyo las clases que voy a usar desde la carpeta php
+include "php/Soporte.php";
+include "php/CintaVideo.php";
+include "php/Dvd.php";
+include "php/Juego.php";
 
 //NOTA: Ya no puedo crear objetos Soporte directamente porque ahora es una clase abstracta
 //Solo puedo crear objetos de las clases hijas: CintaVideo, Dvd o Juego
-//echo "<h2>Prueba de la clase Soporte</h2>";
-//$soporte1 = new Soporte("Tenet", 22, 3); // Esto daría error
-//echo "<strong>" . $soporte1->titulo . "</strong>"; 
-//echo "<br>Precio: " . $soporte1->getPrecio() . " euros"; 
-//echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
-//$soporte1->muestraResumen();
 
 //Primera prueba: pruebo la clase CintaVideo que hereda de Soporte
 //He añadido la duración como nuevo atributo específico de las cintas

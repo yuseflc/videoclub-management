@@ -1,5 +1,9 @@
 <?php
 
+//Declaro el namespace donde está esta clase
+//He colocado todas las clases del proyecto en el namespace Dwes\ProyectoVideoclub
+namespace Dwes\ProyectoVideoclub;
+
 /* He creado esta clase CintaVideo que hereda de Soporte 
 Aquí añado la duración de la película, que es específica de las cintas de vídeo */
 
