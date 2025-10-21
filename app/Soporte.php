@@ -17,6 +17,7 @@ abstract class Soporte implements Resumible {
     public $titulo;      //Lo dejo público para acceder directamente desde fuera
     private $numero;     //Este lo hago privado, solo se accede por el getter
     private $precio;     //También privado para protegerlo
+    public $alquilado = false; //Esta propiedad indica si el soporte está alquilado o no
     
     //Defino una constante para el IVA que usaré en los cálculos
     private const IVA = 0.21; //He puesto el 21% que es el IVA general en España
@@ -26,6 +27,7 @@ abstract class Soporte implements Resumible {
         $this->titulo = $titulo;
         $this->numero = $numero;
         $this->precio = $precio;
+        //La propiedad alquilado ya está inicializada a false por defecto
     }
     
     //Método para obtener el precio base sin IVA

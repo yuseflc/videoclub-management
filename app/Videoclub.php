@@ -20,10 +20,22 @@ class Videoclub {
     private $numProductos = 0;
     private $socios = []; //Array de Cliente
     private $numSocios = 0;
+    private $numProductosAlquilados = 0; //Contador de productos que están alquilados actualmente
+    private $numTotalAlquileres = 0; //Contador total de alquileres realizados (histórico)
     
     //Constructor
     public function __construct($nombre) {
         $this->nombre = $nombre;
+    }
+    
+    //Getter para obtener el número de productos alquilados actualmente
+    public function getNumProductosAlquilados() {
+        return $this->numProductosAlquilados;
+    }
+    
+    //Getter para obtener el número total de alquileres realizados
+    public function getNumTotalAlquileres() {
+        return $this->numTotalAlquileres;
     }
     
     //Método privado para incluir un producto en el array
@@ -112,6 +124,9 @@ class Videoclub {
         try {
             //Si encuentro ambos, intento alquilar
             $cliente->alquilar($soporte);
+            //Si el alquiler se realiza correctamente, incremento los contadores
+            $this->numProductosAlquilados++; //Incremento productos alquilados actualmente
+            $this->numTotalAlquileres++; //Incremento el total histórico de alquileres
         } catch (SoporteYaAlquiladoException $e) {
             //Informo al usuario si el soporte ya está alquilado
             echo "<br>Error: " . $e->getMessage() . "<br>";
@@ -121,6 +136,37 @@ class Videoclub {
         }
         
         //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
+        return $this;
+    }
+    
+    //Método para que un socio devuelva un producto
+    //Este método también permite encadenar llamadas
+    public function devolverSocioProducto($numeroCliente, $numeroSoporte) {
+        //Busco el cliente
+        $cliente = null;
+        foreach ($this->socios as $socio) {
+            if ($socio->getNumero() == $numeroCliente) {
+                $cliente = $socio;
+                break;
+            }
+        }
+        
+        //Si no encuentro el cliente, lanzo excepción
+        if ($cliente == null) {
+            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numeroCliente);
+        }
+        
+        //Intento que el cliente devuelva el soporte
+        try {
+            $cliente->devolver($numeroSoporte);
+            //Si la devolución se realiza correctamente, decremento el contador
+            $this->numProductosAlquilados--; //Disminuyo productos alquilados actualmente
+        } catch (SoporteNoEncontradoException $e) {
+            //Informo al usuario si no se encuentra el soporte
+            echo "<br>Error: " . $e->getMessage() . "<br>";
+        }
+        
+        //Devuelvo $this para permitir el encadenamiento de métodos
         return $this;
     }
 }

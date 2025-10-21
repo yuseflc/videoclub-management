@@ -79,6 +79,7 @@ class Cliente implements Resumible {
         //Si pasa las comprobaciones, alquilo el soporte
         $this->soportesAlquilados[] = $s; //Añado el soporte al array
         $this->numSoportesAlquilados++; //Incremento el contador
+        $s->alquilado = true; //Marco el soporte como alquilado
         echo "<br>Alquilado soporte a: " . $this->nombre . "<br>";
         echo $s->titulo . "<br>";
         //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
@@ -97,6 +98,7 @@ class Cliente implements Resumible {
                 unset($this->soportesAlquilados[$indice]);
                 //Reindexo el array para evitar huecos
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
+                $soporte->alquilado = false; //Marco el soporte como no alquilado
                 echo "<br>Devuelto soporte: " . $soporte->titulo . "<br>";
                 //Devuelvo $this para permitir el encadenamiento de métodos
                 return $this;
