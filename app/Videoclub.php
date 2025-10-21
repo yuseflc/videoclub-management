@@ -169,6 +169,77 @@ class Videoclub {
         //Devuelvo $this para permitir el encadenamiento de métodos
         return $this;
     }
+    
+    //Método para alquilar varios productos a un socio a la vez
+    //Recibe el número del socio y un array con los números de los productos a alquilar
+    //Primero compruebo que todos los soportes estén disponibles antes de alquilar
+    public function alquilarSocioProductos(int $numSocio, array $numerosProductos) {
+        //Primero busco el cliente
+        $cliente = null;
+        foreach ($this->socios as $socio) {
+            if ($socio->getNumero() == $numSocio) {
+                $cliente = $socio;
+                break;
+            }
+        }
+        
+        //Si no encuentro el cliente, lanzo excepción
+        if ($cliente == null) {
+            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
+        }
+        
+        //Array para guardar los soportes que voy a alquilar
+        $soportesAAlquilar = [];
+        
+        //Recorro cada número de producto del array
+        foreach ($numerosProductos as $numeroProducto) {
+            //Busco el soporte en el catálogo de productos
+            $soporteEncontrado = null;
+            foreach ($this->productos as $producto) {
+                if ($producto->getNumero() == $numeroProducto) {
+                    $soporteEncontrado = $producto;
+                    break;
+                }
+            }
+            
+            //Si no encuentro el soporte, lanzo excepción
+            if ($soporteEncontrado == null) {
+                throw new SoporteNoEncontradoException("No existe el soporte con número " . $numeroProducto);
+            }
+            
+            //Compruebo si el soporte ya está alquilado
+            if ($soporteEncontrado->alquilado == true) {
+                //Si está alquilado, no alquilo ninguno y muestro mensaje
+                echo "<br>Error: El soporte " . $soporteEncontrado->titulo . " ya está alquilado. No se realizará ningún alquiler.<br>";
+                return $this; //Salgo del método sin alquilar nada
+            }
+            
+            //Si está disponible, lo guardo en el array para alquilarlo después
+            $soportesAAlquilar[] = $soporteEncontrado;
+        }
+        
+        //Si llego aquí es porque todos los soportes están disponibles
+        //Ahora sí procedo a alquilarlos uno por uno
+        foreach ($soportesAAlquilar as $soporte) {
+            try {
+                //Intento alquilar el soporte al cliente
+                $cliente->alquilar($soporte);
+                //Si el alquiler funciona, incremento los contadores
+                $this->numProductosAlquilados++;
+                $this->numTotalAlquileres++;
+            } catch (SoporteYaAlquiladoException $e) {
+                //Si ya lo tenía alquilado este cliente, informo
+                echo "<br>Error: " . $e->getMessage() . "<br>";
+            } catch (CupoSuperadoException $e) {
+                //Si supera el cupo, informo y paro de alquilar
+                echo "<br>Error: " . $e->getMessage() . "<br>";
+                break; //Salgo del bucle para no intentar alquilar más
+            }
+        }
+        
+        //Devuelvo $this para permitir el encadenamiento de métodos
+        return $this;
+    }
 }
 
 ?>
