@@ -6,6 +6,12 @@ namespace Dwes\ProyectoVideoclub;
 
 //Ya no necesito incluir las clases porque el autoload las cargará automáticamente
 
+//Importo las excepciones que voy a capturar desde el namespace Util
+use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
+use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\ClienteNoEncontradoException;
+
 //Creo la clase Videoclub
 class Videoclub {
     //Atributos
@@ -72,6 +78,7 @@ class Videoclub {
     //Método para alquilar un soporte a un socio
     //He modificado este método para que devuelva $this y así poder encadenar métodos
     //Esto permite hacer llamadas como: $videoclub->alquilaSocioProducto(1,1)->alquilaSocioProducto(1,2)
+    //Ahora este método captura las excepciones que lanza Cliente e informa al usuario
     public function alquilaSocioProducto($numeroCliente, $numeroSoporte) {
         //Busco el cliente
         $cliente = null;
@@ -82,11 +89,9 @@ class Videoclub {
             }
         }
         
-        //Si no encuentro el cliente
+        //Si no encuentro el cliente, lanzo excepción ClienteNoEncontradoException
         if ($cliente == null) {
-            echo "<br>No existe el cliente con número " . $numeroCliente . "<br>";
-            //Devuelvo $this incluso si hay error, para mantener la cadena
-            return $this;
+            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numeroCliente);
         }
         
         //Busco el soporte
@@ -98,15 +103,23 @@ class Videoclub {
             }
         }
         
-        //Si no encuentro el soporte
+        //Si no encuentro el soporte, lanzo excepción SoporteNoEncontradoException
         if ($soporte == null) {
-            echo "<br>No existe el soporte con número " . $numeroSoporte . "<br>";
-            //Devuelvo $this incluso si hay error, para mantener la cadena
-            return $this;
+            throw new SoporteNoEncontradoException("No existe el soporte con número " . $numeroSoporte);
         }
         
-        //Si encuentro ambos, alquilo
-        $cliente->alquilar($soporte);
+        //Capturo las excepciones que puede lanzar el método alquilar de Cliente
+        try {
+            //Si encuentro ambos, intento alquilar
+            $cliente->alquilar($soporte);
+        } catch (SoporteYaAlquiladoException $e) {
+            //Informo al usuario si el soporte ya está alquilado
+            echo "<br>Error: " . $e->getMessage() . "<br>";
+        } catch (CupoSuperadoException $e) {
+            //Informo al usuario si ha superado el cupo
+            echo "<br>Error: " . $e->getMessage() . "<br>";
+        }
+        
         //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
         return $this;
     }
