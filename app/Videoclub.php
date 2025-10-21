@@ -141,11 +141,11 @@ class Videoclub {
     
     //Método para que un socio devuelva un producto
     //Este método también permite encadenar llamadas
-    public function devolverSocioProducto($numeroCliente, $numeroSoporte) {
+    public function devolverSocioProducto(int $numSocio, int $numeroProducto) {
         //Busco el cliente
         $cliente = null;
         foreach ($this->socios as $socio) {
-            if ($socio->getNumero() == $numeroCliente) {
+            if ($socio->getNumero() == $numSocio) {
                 $cliente = $socio;
                 break;
             }
@@ -153,12 +153,12 @@ class Videoclub {
         
         //Si no encuentro el cliente, lanzo excepción
         if ($cliente == null) {
-            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numeroCliente);
+            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
         }
         
         //Intento que el cliente devuelva el soporte
         try {
-            $cliente->devolver($numeroSoporte);
+            $cliente->devolver($numeroProducto);
             //Si la devolución se realiza correctamente, decremento el contador
             $this->numProductosAlquilados--; //Disminuyo productos alquilados actualmente
         } catch (SoporteNoEncontradoException $e) {
@@ -234,6 +234,40 @@ class Videoclub {
                 //Si supera el cupo, informo y paro de alquilar
                 echo "<br>Error: " . $e->getMessage() . "<br>";
                 break; //Salgo del bucle para no intentar alquilar más
+            }
+        }
+        
+        //Devuelvo $this para permitir el encadenamiento de métodos
+        return $this;
+    }
+    
+    //Método para que un socio devuelva varios productos a la vez
+    //Recibe el número del socio y un array con los números de los productos a devolver
+    public function devolverSocioProductos(int $numSocio, array $numerosProductos) {
+        //Busco el cliente
+        $cliente = null;
+        foreach ($this->socios as $socio) {
+            if ($socio->getNumero() == $numSocio) {
+                $cliente = $socio;
+                break;
+            }
+        }
+        
+        //Si no encuentro el cliente, lanzo excepción
+        if ($cliente == null) {
+            throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
+        }
+        
+        //Recorro cada número de producto del array para devolverlos
+        foreach ($numerosProductos as $numeroProducto) {
+            //Intento que el cliente devuelva cada soporte
+            try {
+                $cliente->devolver($numeroProducto);
+                //Si la devolución funciona, decremento el contador
+                $this->numProductosAlquilados--; //Disminuyo productos alquilados actualmente
+            } catch (SoporteNoEncontradoException $e) {
+                //Si no encuentra el soporte, informo y continúo con el siguiente
+                echo "<br>Error: " . $e->getMessage() . "<br>";
             }
         }
         
