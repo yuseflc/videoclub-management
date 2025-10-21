@@ -19,20 +19,19 @@ Esto hace el código más limpio y fácil de mantener.
 spl_autoload_register(function ($nombreClase) {
     
     //El $nombreClase viene con el namespace completo: Dwes\ProyectoVideoclub\Cliente
-    //Necesito extraer solo el nombre de la clase sin el namespace
+    //o puede venir con subdirectorios: Dwes\ProyectoVideoclub\Util\VideoclubException
     
-    //Busco la última barra invertida en el nombre completo
-    $posicionBarra = strrpos($nombreClase, '\\');
+    //Reemplazo las barras invertidas del namespace por barras normales para construir la ruta
+    //Por ejemplo: Dwes\ProyectoVideoclub\Util\VideoclubException -> Dwes/ProyectoVideoclub/Util/VideoclubException
+    $rutaClase = str_replace('\\', '/', $nombreClase);
     
-    //Si encuentro una barra invertida, extraigo solo el nombre de la clase
-    if ($posicionBarra !== false) {
-        //Extraigo desde la posición después de la última barra hasta el final
-        $nombreClase = substr($nombreClase, $posicionBarra + 1);
-    }
+    //Quito el prefijo del namespace base para quedarme solo con la ruta relativa
+    //Por ejemplo: Dwes/ProyectoVideoclub/Util/VideoclubException -> Util/VideoclubException
+    $rutaClase = str_replace('Dwes/ProyectoVideoclub/', '', $rutaClase);
     
     //Construyo la ruta completa al archivo de la clase
     //Todas mis clases están en la carpeta 'app/'
-    $rutaArchivo = __DIR__ . '/app/' . $nombreClase . '.php';
+    $rutaArchivo = __DIR__ . '/app/' . $rutaClase . '.php';
     
     //Verifico si el archivo existe antes de incluirlo
     if (file_exists($rutaArchivo)) {
