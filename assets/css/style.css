@@ -1,0 +1,292 @@
+/* 
+ * Estilos para el sistema de gestión del Videoclub
+ */
+
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a1a;
+    min-height: 100vh;
+    padding: 20px;
+    color: #e0e0e0;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #2b2b2b;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+/* Encabezado */
+.header {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+    border-bottom: 2px solid #404040;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.header p {
+    font-size: 1.2em;
+    color: #b0b0b0;
+}
+
+/* Navegación */
+.nav {
+    background: #1f1f1f;
+    padding: 15px 40px;
+    border-bottom: 1px solid #404040;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links a {
+    color: #b0b0b0;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: #404040;
+    color: #ffffff;
+}
+
+/* Contenido principal */
+.content {
+    padding: 30px;
+}
+
+/* Secciones */
+.section {
+    padding: 30px 40px;
+}
+
+.section-title {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #404040;
+}
+
+/* Información de cliente */
+.cliente-info {
+    background: #1f1f1f;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 3px solid #ffffff;
+}
+
+.cliente-info h3 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.cliente-info strong {
+    color: #ffffff;
+}
+
+/* Tarjetas de soporte */
+.soporte-card {
+    background: #1f1f1f;
+    border: 1px solid #404040;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.soporte-card .titulo,
+.titulo {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.soporte-card .detalle,
+.detalle {
+    color: #b0b0b0;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.soporte-card .precio,
+.precio {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Mensajes de acción */
+.mensaje-exito {
+    background: #1f1f1f;
+    border-left: 3px solid #ffffff;
+    color: #e0e0e0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+}
+
+.mensaje-error {
+    background: #1f1f1f;
+    border-left: 3px solid #808080;
+    color: #d0d0d0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+}
+
+.mensaje-info {
+    background: #1f1f1f;
+    border-left: 3px solid #606060;
+    color: #e0e0e0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+}
+
+/* Lista de alquileres */
+.lista-alquileres {
+    background: #1f1f1f;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #404040;
+}
+
+.lista-alquileres .contador {
+    background: #404040;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Separadores */
+.separador {
+    height: 1px;
+    background: #404040;
+    margin: 30px 40px;
+}
+
+/* Footer */
+.footer {
+    background: #1a1a1a;
+    color: #b0b0b0;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    border-top: 1px solid #404040;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #404040;
+    color: #ffffff;
+    border-radius: 12px;
+    font-size: 0.85em;
+    margin-left: 10px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    .separador {
+        margin: 20px;
+    }
+}
+
+/* Estilos adicionales para mejorar la presentación */
+.resumen-soporte {
+    background: transparent;
+    padding: 10px 0;
+    margin: 10px 0 0 0;
+    border: none;
+}
+
+.resumen-soporte strong {
+    color: #ffffff;
+}
+
+/* Estilos para tablas si se usan */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #404040;
+}
+
+th {
+    background: #1f1f1f;
+    color: #ffffff;
+    font-weight: 600;
+}
