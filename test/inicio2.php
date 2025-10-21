@@ -35,16 +35,41 @@ $cliente1->alquilar($soporte1)->alquilar($soporte2)->alquilar($soporte3);
 
 //voy a intentar alquilar de nuevo un soporte que ya tiene alquilado
 //el encadenamiento sigue funcionando incluso con errores
-$cliente1->alquilar($soporte1);
+try {
+    $cliente1->alquilar($soporte1);
+} catch (Exception $e) {
+    echo "<br>Error: " . $e->getMessage() . "<br>";
+}
+
 //el cliente tiene 3 soportes en alquiler como máximo
 //este soporte no lo va a poder alquilar
-$cliente1->alquilar($soporte4);
+try {
+    $cliente1->alquilar($soporte4);
+} catch (Exception $e) {
+    echo "<br>Error: " . $e->getMessage() . "<br>";
+}
+
 //este soporte no lo tiene alquilado, pero devuelvo también encadenado
-$cliente1->devolver(4);
+try {
+    $cliente1->devolver(4);
+} catch (Exception $e) {
+    echo "<br>Error: " . $e->getMessage() . "<br>";
+}
+
 //devuelvo dos soportes de forma encadenada
-$cliente1->devolver(2)->alquilar($soporte4);
+try {
+    $cliente1->devolver(2)->alquilar($soporte4);
+} catch (Exception $e) {
+    echo "<br>Error: " . $e->getMessage() . "<br>";
+}
+
 //listo los elementos alquilados
 $cliente1->listarAlquileres();
+
 //este cliente no tiene alquileres
-$cliente2->devolver(2);
+try {
+    $cliente2->devolver(2);
+} catch (Exception $e) {
+    echo "<br>Error: " . $e->getMessage() . "<br>";
+}
 ?>
