@@ -1,0 +1,53 @@
+#Este gitignore es una base para el proyecto, sin saber exactamente todos los lenguajes y o frameworks que utilizaremos. En el futuro se editará, una vez sepamos todo lo que se
+#utiliza y deseamos que se ignore.
+
+# Archivos del sistema que no aportan nada al proyecto
+.DS_Store
+Thumbs.db
+
+# Archivos temporales y de respaldo
+*.log
+*.tmp
+*.bak
+*.swp
+*.orig
+
+# Configuraciones locales que no deben subirse
+.env
+.env.local
+.env.*.local
+
+# Carpetas de editores que uso o podría usar
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencias de PHP (Composer)
+vendor/
+composer.lock
+
+# Dependencias JS/CSS si uso npm o yarn
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos generados por herramientas de compilación (por si uso Sass, Webpack, etc.)
+dist/
+build/
+.cache/
+*.map
+
+# Bases de datos locales (por si uso SQLite en pruebas)
+*.sqlite
+*.sqlite3
+*.db
+
+# Archivos de imágenes que se generan o se usan temporalmente
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.ico
