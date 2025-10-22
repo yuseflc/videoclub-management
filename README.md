@@ -45,7 +45,28 @@ Este proyecto simula la gestión de un videoclub clásico, permitiendo almacenar
 
 ## IA utilizada
 
-Este proyecto cuenta con el apoyo de **GitHub Copilot**, concretamente **Claude Sonnet 4.5**, para facilitar la escritura de código, comentarios y documentación, ayudando a mantener la coherencia y calidad en el desarrollo.
+Este proyecto cuenta con el apoyo de **GitHub Copilot** (Claude Sonnet 4.5) como herramienta de asistencia, enfocada en:
+
+- Facilitar la escritura de código base y estructuras de clases
+- Generar comentarios explicativos detallados
+- Mantener coherencia y calidad en la documentación
+- Ayuda a la realización de parte de los estilos css del proyecto
+
+**Importante**: La IA se utilizó como **apoyo, no como sustitución**. Todo el código ha sido:
+
+- ✓ Revisado y comprendido completamente por los desarrolladores
+- ✓ Adaptado al contexto específico del proyecto Videoclub
+- ✓ Mejorado con lógica personalizada (validaciones, encadenamiento de métodos)
+- ✓ Comentado de forma manual para explicar decisiones de diseño
+
+**Ejemplos de adaptaciones realizadas**:
+
+- **Fluent Interface**: Modificación manual del código sugerido para permitir encadenamiento de métodos (`$cliente->alquilar($s)->devolver($s2)`)
+- **Sistema de Excepciones**: Personalización completa del manejo de errores específicos del videoclub
+- **Control de Estado**: Lógica propia para gestionar alquileres activos y totales
+- **Validaciones**: Implementación de reglas de negocio (máximo de alquileres, duplicados, etc.)
+
+**Transparencia**: Los commits con mayor contenido de IA se indican en el historial, y cualquier limitación encontrada se documentó en cada iteración.
 
 ## Explicación técnica
 
