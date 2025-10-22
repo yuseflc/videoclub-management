@@ -110,7 +110,75 @@ Proyecto-Videoclub/
 
 ## Capturas de pantalla
 
-*Esta sección se completará más adelante, cuando el proyecto tenga una interfaz visual o ejemplos de ejecución.*
+### Sección 1: Prueba de Soportes Individuales (inicio.php)
+
+**Captura 1:** Página principal de pruebas
+![Captura 1](assets/screenshots/cap1.png)
+*Interfaz inicial del sistema de gestión de videoclub con navegación entre secciones.*
+
+**Captura 2:** Prueba de CintaVideo
+![Captura 2](assets/screenshots/cap2.png)
+*Demostración de la clase CintaVideo mostrando título, precio y duración en minutos.*
+
+**Captura 3:** Información del DVD
+![Captura 3](assets/screenshots/cap3.png)
+*Visualización de propiedades del DVD incluyendo idiomas soportados y formato de pantalla.*
+
+**Captura 4:** Detalles del Juego
+![Captura 4](assets/screenshots/cap4.png)
+*Presentación de la clase Juego con consola, número de jugadores y precio.*
+
+### Sección 2: Gestión de Clientes y Encadenamiento (inicio2.php)
+
+**Captura 5:** Información de clientes
+![Captura 5](assets/screenshots/cap5.png)
+*Registro de dos clientes con sus identificadores únicos.*
+
+**Captura 6:** Catálogo de soportes disponibles
+![Captura 6](assets/screenshots/cap6.png)
+*Lista de productos disponibles para alquilar con detalles y precios.*
+
+**Captura 7:** Alquileres exitosos
+![Captura 7](assets/screenshots/cap7.png)
+*Resultado de alquileres múltiples usando encadenamiento de métodos (method chaining).*
+
+**Captura 8:** Validación de alquiler duplicado
+![Captura 8](assets/screenshots/cap8.png)
+*Manejo de excepción cuando se intenta alquilar un soporte ya alquilado.*
+
+**Captura 9:** Control de cupo máximo
+![Captura 9](assets/screenshots/cap9.png)
+*Validación que impide superar el máximo de alquileres concurrentes permitidos.*
+
+**Captura 10:** Devolución y nuevo alquiler
+![Captura 10](assets/screenshots/cap10.png)
+*Proceso de devolución de soporte y alquiler de uno nuevo mediante encadenamiento.*
+
+**Captura 11:** Listado de alquileres actuales
+![Captura 11](assets/screenshots/cap11.png)
+*Consulta de todos los soportes alquilados actualmente por un cliente.*
+
+**Captura 12:** Validaciones de devolución
+![Captura 12](assets/screenshots/cap12.png)
+*Manejo de intentos de devolver soportes que no existen en los alquileres.*
+
+### Sección 3: Gestión Completa del Videoclub (inicio3.php)
+
+**Captura 13:** Inicialización del videoclub
+![Captura 13](assets/screenshots/cap13.png)
+*Creación del videoclub con nombre y estado inicial.*
+
+**Captura 14:** Inclusión de productos en catálogo
+![Captura 14](assets/screenshots/cap14.png)
+*Adición de 7 productos variados (DVDs, juegos y cintas de vídeo) al catálogo.*
+
+**Captura 15:** Gestión de socios
+![Captura 15](assets/screenshots/cap15.png)
+*Registro de socios con diferentes cupos máximos de alquiler concurrente.*
+
+**Captura 16:** Alquileres y validaciones finales
+![Captura 16](assets/screenshots/cap16.png)
+*Demostración completa de operaciones: alquiler exitoso, validación de duplicados y control de cupo.*
 
 ---
 
