@@ -93,8 +93,10 @@ Proyecto-Videoclub/
 │       ├── SoporteYaAlquiladoException.php
 │       └── VideoclubException.php
 ├── assets/          # Recursos estáticos
-│   └── css/
-│       └── style.css    
+│   ├── css/
+│   │   └── style.css
+│   └── screenshots/     # Capturas de pantalla del proyecto
+│       ├── cap1.png hasta cap16.png
 ├── test/            # Archivos de prueba
 │   ├── inicio.php
 │   ├── inicio2.php
