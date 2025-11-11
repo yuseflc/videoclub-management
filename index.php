@@ -52,8 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Guardamos el usuario en la sesión
             $_SESSION['usuario'] = $usuario;
             
-            // Lo redirigimos a main.php para mostrarle la página de bienvenida
-            header('Location: main.php');
+            // Comprobamos si el usuario es administrador
+            // Si es admin, lo redirigimos a mainAdmin.php
+            // Si no, lo redirigimos a main.php
+            if ($usuario === 'admin') {
+                header('Location: mainAdmin.php');
+            } else {
+                header('Location: main.php');
+            }
             exit();
         } else {
             // Si no es correcto, mostramos error
