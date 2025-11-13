@@ -14,6 +14,10 @@
  * - Página de bienvenida para administrador
  */
 
+// Incluimos el autoload ANTES de session_start para que las clases estén disponibles
+// cuando PHP deserialice los objetos guardados en la sesión
+require_once 'autoload.php';
+
 // Iniciamos la sesión (igual que en index.php)
 // Necesitamos hacer esto en TODAS las páginas donde queremos usar $_SESSION
 session_start();
@@ -33,9 +37,6 @@ if (!isset($_SESSION['usuario'])) {
 
 // Guardamos el nombre del usuario para usarlo en el HTML
 $nombre_usuario = $_SESSION['usuario'];
-
-// Incluimos el autoload para cargar las clases automáticamente
-require_once 'autoload.php';
 
 // Importamos las clases que vamos a usar
 use Dwes\ProyectoVideoclub\Cliente;
@@ -153,7 +154,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
         <header class="main-header">
             <div class="header-content">
                 <!-- Título del videoclub -->
-                <h1>🎬 Videoclub - Panel de Administración</h1>
+                <h1>Videoclub - Panel de Administración</h1>
 
                 <!-- Información del usuario logueado y enlace para salir -->
                 <div class="user-info">
@@ -177,13 +178,11 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
             <section class="welcome-section">
                 <h2>Panel de Administración del Videoclub</h2>
                 <p>Aquí puedes ver y gestionar todos los clientes y soportes del videoclub.</p>
-                <p>Los datos mostrados a continuación se cargan desde arrays asociativos.</p>
-                <p><em>En futuras versiones se cargarán desde una base de datos.</em></p>
             </section>
 
             <!-- SECCIÓN DE LISTADO DE CLIENTES -->
             <section class="admin-section">
-                <h2>📋 Listado de Clientes</h2>
+                <h2>Listado de Clientes</h2>
                 
                 <?php if (count($clientes) > 0): ?>
                     <div class="table-container">
@@ -223,7 +222,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
 
             <!-- SECCIÓN DE LISTADO DE SOPORTES -->
             <section class="admin-section">
-                <h2>💿 Listado de Soportes</h2>
+                <h2>Listado de Soportes</h2>
                 
                 <?php if (count($soportes) > 0): ?>
                     <div class="table-container">
@@ -285,7 +284,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
 
             <!-- SECCIÓN DE ESTADÍSTICAS -->
             <section class="admin-section">
-                <h2>📊 Estadísticas del Videoclub</h2>
+                <h2>Estadísticas del Videoclub</h2>
                 <div class="stats-container">
                     <div class="stat-card">
                         <div class="stat-number"><?php echo count($clientes); ?></div>
@@ -330,8 +329,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
 
         <!-- Pie de página -->
         <footer class="main-footer">
-            <p>&copy; 2025 Videoclub Online - Sistema de Gestión</p>
-            <p>Desarrollado por Yusef Laroussi y David López Ferreras</p>
+            <p>Videoclub - Sistema de Gestión</p>
         </footer>
     </div>
 
@@ -346,14 +344,14 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #fff;
+            background-color: #787878ff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
         }
 
         .admin-table thead {
-            background-color: #2c3e50;
+            background-color: #4d4d4dff;
             color: white;
         }
 
@@ -370,7 +368,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
         }
 
         .admin-table tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: #b8b8b8ff;
             transition: background-color 0.3s ease;
         }
 
@@ -427,7 +425,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
         }
 
         .welcome-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #393939ff 0%, #484848ff 100%);
             color: white;
             padding: 30px;
             border-radius: 8px;
