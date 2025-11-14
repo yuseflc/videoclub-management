@@ -64,8 +64,14 @@ class Videoclub {
     }
     
     //Método para incluir un socio con alquiler por defecto = 3
+    //Ahora se genera automáticamente usuario y contraseña
     public function incluirSocio($nombre, $maxAlquilerConcurrente = 3) {
-        $socio = new Cliente($nombre, $this->numSocios + 1, $maxAlquilerConcurrente);
+        // Generamos un usuario basado en el nombre (convertimos a minúsculas y reemplazamos espacios)
+        $usuario = strtolower(str_replace(' ', '.', $nombre));
+        // Generamos una contraseña por defecto (nombre + año actual)
+        $password = strtolower($nombre) . date('Y');
+        
+        $socio = new Cliente($nombre, $this->numSocios + 1, $usuario, $password, $maxAlquilerConcurrente);
         $this->socios[] = $socio;
         $this->numSocios++;
         echo "<br>Incluido socio " . $this->numSocios . "<br>";

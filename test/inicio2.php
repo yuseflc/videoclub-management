@@ -40,8 +40,8 @@ use Dwes\ProyectoVideoclub\Dvd;
 use Dwes\ProyectoVideoclub\Juego;
 
 //instanciamos un par de objetos cliente
-$cliente1 = new Cliente("Bruce Wayne", 23);
-$cliente2 = new Cliente("Clark Kent", 33);
+$cliente1 = new Cliente("Bruce Wayne", 23, "bruce.wayne", "batman2024");
+$cliente2 = new Cliente("Clark Kent", 33, "clark.kent", "superman2024");
 
 echo '<div class="section">';
 echo '<h2 class="section-title">Información de Clientes</h2>';

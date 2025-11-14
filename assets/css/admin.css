@@ -59,6 +59,11 @@
     color: white;
 }
 
+.badge-usuario {
+    background-color: #9b59b6;
+    color: white;
+}
+
 .btn-action {
     padding: 6px 12px;
     background-color: #3498db;

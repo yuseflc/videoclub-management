@@ -86,14 +86,15 @@ if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
     /**
      * CREACIÓN DE CLIENTES DE PRUEBA
      * 
-     * Creamos varios clientes del videoclub con sus números de identificación.
+     * Creamos varios clientes del videoclub con sus números de identificación,
+     * usuario y contraseña para poder acceder al sistema.
      * Los clientes tienen un límite de 3 alquileres concurrentes.
      */
-    $cliente1 = new Cliente("Bruce Wayne", 23);
-    $cliente2 = new Cliente("Clark Kent", 33);
-    $cliente3 = new Cliente("Diana Prince", 45);
-    $cliente4 = new Cliente("Barry Allen", 12);
-    $cliente5 = new Cliente("Arthur Curry", 56);
+    $cliente1 = new Cliente("Bruce Wayne", 23, "bruce.wayne", "batman2024");
+    $cliente2 = new Cliente("Clark Kent", 33, "clark.kent", "superman2024");
+    $cliente3 = new Cliente("Diana Prince", 45, "diana.prince", "wonderwoman2024");
+    $cliente4 = new Cliente("Barry Allen", 12, "barry.allen", "flash2024");
+    $cliente5 = new Cliente("Arthur Curry", 56, "arthur.curry", "aquaman2024");
     
     /**
      * Array asociativo de clientes
@@ -192,6 +193,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
+                                    <th>Usuario</th>
                                     <th>Soportes Alquilados</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -201,6 +203,11 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
                                     <tr>
                                         <td><?php echo htmlspecialchars($id); ?></td>
                                         <td><?php echo htmlspecialchars($cliente->nombre); ?></td>
+                                        <td>
+                                            <span class="badge badge-usuario">
+                                                <?php echo htmlspecialchars($cliente->getUsuario()); ?>
+                                            </span>
+                                        </td>
                                         <td>
                                             <span class="badge badge-info">
                                                 <?php echo $cliente->getNumSoportesAlquilados(); ?>
