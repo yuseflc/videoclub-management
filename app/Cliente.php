@@ -15,15 +15,20 @@ use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 class Cliente implements Resumible {
     public $nombre;
     private $numero;
+    private $usuario;  //Usuario para login del cliente
+    private $password; //Contraseña del cliente (codificada)
     private $soportesAlquilados = []; //Array que guarda los soportes alquilados
     private $numSoportesAlquilados = 0; //Contador de alquileres
     private $maxAlquilerConcurrente;
     
     //Constructor
     //maxAlquilerConcurrente es opcional y por defecto vale 3
-    public function __construct($nombre, $numero, $maxAlquilerConcurrente = 3) {
+    public function __construct($nombre, $numero, $usuario, $password, $maxAlquilerConcurrente = 3) {
         $this->nombre = $nombre;
         $this->numero = $numero;
+        $this->usuario = $usuario;
+        //Codificamos la contraseña usando password_hash() para mayor seguridad
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
     }
     
@@ -38,6 +43,16 @@ class Cliente implements Resumible {
     }
     
 
+    public function getUsuario() {
+        return $this->usuario;
+    }
+    
+
+    public function getPassword() {
+        return $this->password;
+    }
+    
+
     public function getNumSoportesAlquilados() {
         return $this->numSoportesAlquilados;
     }
@@ -45,6 +60,7 @@ class Cliente implements Resumible {
     //Método que muestra el resumen del cliente
     public function muestraResumen() {
         echo "<br><strong>Cliente:</strong> " . $this->nombre . "<br>";
+        echo "Usuario: " . $this->usuario . "<br>";
         echo "Cantidad de alquileres: " . count($this->soportesAlquilados) . "<br>";
     }
     
