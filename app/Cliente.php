@@ -47,11 +47,23 @@ class Cliente implements Resumible {
         return $this->usuario;
     }
     
+    public function setUsuario($usuario) {
+        $this->usuario = $usuario;
+    }
 
     public function getPassword() {
         return $this->password;
     }
     
+    public function setPassword($password) {
+        // Si la contraseña ya está hasheada (empieza con $2y$ típico de bcrypt), la asignamos directamente
+        // Si no, la hasheamos
+        if (substr($password, 0, 4) === '$2y$' || substr($password, 0, 4) === '$2a$' || substr($password, 0, 4) === '$2b$') {
+            $this->password = $password;
+        } else {
+            $this->password = password_hash($password, PASSWORD_DEFAULT);
+        }
+    }
 
     public function getNumSoportesAlquilados() {
         return $this->numSoportesAlquilados;
