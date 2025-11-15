@@ -8,6 +8,7 @@
 
 // Incluimos el autoload ANTES de session_start para que las clases estén disponibles
 require_once 'autoload.php';
+require_once 'clientesData.php';
 
 // Iniciamos la sesión. Las sesiones en PHP nos permiten mantener información
 // del usuario mientras navega por el sitio. Es como si le diéramos un "carnet"
@@ -69,22 +70,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 require_once 'mainAdmin.php';
             }
             
+            // También cargamos los clientes persistidos
+            $datosClientesPeristidos = cargar_clientes_persistidos();
+            if (!empty($datosClientesPeristidos)) {
+                foreach ($datosClientesPeristidos as $numero => $datosCliente) {
+                    // Creamos un objeto Cliente con los datos persistidos
+                    $clientePersistido = new \Dwes\ProyectoVideoclub\Cliente(
+                        $datosCliente['nombre'],
+                        $numero,
+                        $datosCliente['usuario'],
+                        $datosCliente['password']
+                    );
+                    // Establecemos la contraseña ya hasheada usando el setter
+                    $clientePersistido->setPassword($datosCliente['password']);
+                    
+                    // Agregamos el cliente persistido a la sesión
+                    $_SESSION['clientes'][$numero] = $clientePersistido;
+                }
+            }
+            
             // Buscamos si el usuario coincide con algún cliente
             $clientes = $_SESSION['clientes'];
             $clienteEncontrado = null;
+            $passwordEncontrada = null;
             
             foreach ($clientes as $cliente) {
                 if ($cliente->getUsuario() === $usuario) {
                     $clienteEncontrado = $cliente;
+                    $passwordEncontrada = $cliente->getPassword();
                     break;
                 }
             }
             
             // Si es un cliente registrado, lo redirigimos a mainCliente.php
             if ($clienteEncontrado !== null) {
-                $_SESSION['cliente'] = $clienteEncontrado;
-                header('Location: mainCliente.php');
-                exit();
+                // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
+                if (password_verify($password, $passwordEncontrada)) {
+                    $_SESSION['cliente'] = $clienteEncontrado;
+                    header('Location: mainCliente.php');
+                    exit();
+                } else {
+                    // Contraseña incorrecta
+                    $mostrar_error = true;
+                    $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
+                }
             } else {
                 // Si no es admin ni cliente, lo redirigimos a main.php
                 header('Location: main.php');

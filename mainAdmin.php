@@ -18,6 +18,9 @@
 // cuando PHP deserialice los objetos guardados en la sesión
 require_once 'autoload.php';
 
+// Incluimos el archivo de gestión de persistencia de clientes
+require_once 'clientesData.php';
+
 // Iniciamos la sesión (igual que en index.php)
 // Necesitamos hacer esto en TODAS las páginas donde queremos usar $_SESSION
 session_start();
@@ -45,13 +48,14 @@ use Dwes\ProyectoVideoclub\Dvd;
 use Dwes\ProyectoVideoclub\Juego;
 
 /**
- * CARGA DE DATOS DE PRUEBA
+ * CARGA DE DATOS DE PRUEBA Y PERSISTIDOS
  * 
- * En esta sección copiamos los datos de las pruebas del proyecto
- * en arrays asociativos y los guardamos en la sesión.
+ * En esta sección cargamos:
+ * 1. Los soportes de prueba (siempre los mismos)
+ * 2. Los clientes: primero los de prueba, luego los persistidos (creados por el admin)
  * 
- * Nota: En futuras versiones, estos datos se cargarán desde la base de datos.
- * En esta versión solo se cargan si no existen ya en la sesión.
+ * Los clientes creados por el admin se guardan en un archivo JSON para persistir
+ * entre diferentes sesiones.
  */
 if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
     
@@ -109,6 +113,25 @@ if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
         12 => $cliente4,  // Barry Allen
         56 => $cliente5   // Arthur Curry
     );
+    
+    /**
+     * CARGA DE CLIENTES PERSISTIDOS
+     * 
+     * Cargamos los clientes que han sido creados por el administrador
+     * y guardados en el archivo JSON de persistencia.
+     */
+    $clientes_persistidos = cargar_clientes_persistidos();
+    foreach ($clientes_persistidos as $id => $datos) {
+        // Reconstruimos el objeto Cliente desde los datos persistidos
+        $cliente_persistido = new Cliente(
+            $datos['nombre'],
+            $datos['numero'],
+            $datos['usuario'],
+            $datos['password']
+        );
+        // Lo añadimos al array (puede sobrescribir si el ID coincide)
+        $clientes_array[$id] = $cliente_persistido;
+    }
     
     /**
      * Almacenamos los arrays en la sesión
@@ -184,7 +207,12 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
 
             <!-- SECCIÓN DE LISTADO DE CLIENTES -->
             <section class="admin-section">
-                <h2>Listado de Clientes</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0;">Listado de Clientes</h2>
+                    <a href="formCreateCliente.php" class="btn-action" style="background-color: #27ae60; text-decoration: none; display: inline-block; padding: 8px 16px;">
+                        + Crear Cliente
+                    </a>
+                </div>
                 
                 <?php if (count($clientes) > 0): ?>
                     <div class="table-container">
