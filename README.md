@@ -112,75 +112,66 @@ Proyecto-Videoclub/
 
 ## Capturas de pantalla
 
-### Sección 1: Prueba de Soportes Individuales (inicio.php)
+### Sección 1: Prueba de Soportes Individuales (`inicio.php`)
 
-**Captura 1:** Página principal de pruebas
-![Captura 1](assets/screenshots/cap1.png)
-*Interfaz inicial del sistema de gestión de videoclub con navegación entre secciones.*
+Este archivo demuestra cómo instanciar diferentes tipos de soportes (CintaVideo, DVD, Juego) y acceder a sus propiedades.
 
-**Captura 2:** Prueba de CintaVideo
-![Captura 2](assets/screenshots/cap2.png)
-*Demostración de la clase CintaVideo mostrando título, precio y duración en minutos.*
+| Captura | Descripción | Código |
+|---------|-------------|--------|
+| ![1](Screenshots/1cap.png) | Página principal con opciones de prueba | Muestra opciones para navegar entre las 3 secciones de prueba |
+| ![2](Screenshots/2cap.png) | Instancia de CintaVideo | `new CintaVideo("Los cazafantasmas", 23, 3.5, 107);` - Título, ID, precio, duración |
+| ![3](Screenshots/3cap.png) | Instancia de DVD | `new Dvd("Origen", 24, 15, "es,en,fr", "16:9");` - Incluye idiomas y formato |
+| ![4](Screenshots/4cap.png) | Instancia de Juego | `new Juego("The Last of Us", 26, 49.99, "PS4", 1, 1);` - Consola, jugadores |
 
-**Captura 3:** Información del DVD
-![Captura 3](assets/screenshots/cap3.png)
-*Visualización de propiedades del DVD incluyendo idiomas soportados y formato de pantalla.*
+**Concepto clave:** Polimorfismo. Todas las clases extienden `Soporte` implementando métodos como `getPrecio()`, `getPrecioConIVA()`, `muestraResumen()`.
 
-**Captura 4:** Detalles del Juego
-![Captura 4](assets/screenshots/cap4.png)
-*Presentación de la clase Juego con consola, número de jugadores y precio.*
+---
 
-### Sección 2: Gestión de Clientes y Encadenamiento (inicio2.php)
+### Sección 2: Gestión de Clientes y Encadenamiento (`inicio2.php`)
 
-**Captura 5:** Información de clientes
-![Captura 5](assets/screenshots/cap5.png)
-*Registro de dos clientes con sus identificadores únicos.*
+Demuestra cómo los clientes alquilan y devuelven soportes, con validaciones de negocio.
 
-**Captura 6:** Catálogo de soportes disponibles
-![Captura 6](assets/screenshots/cap6.png)
-*Lista de productos disponibles para alquilar con detalles y precios.*
+| Captura | Descripción | Código |
+|---------|-------------|--------|
+| ![5](Screenshots/5cap.png) | Creación de clientes | `new Cliente("Bruce Wayne", 23, "bruce.wayne", "batman2024");` - Incluye usuario/contraseña |
+| ![6](Screenshots/6cap.png) | Catálogo de soportes | Array asociativo de 6 soportes disponibles para alquilar |
+| ![7](Screenshots/7cap.png) | Alquileres con encadenamiento | `$cliente->alquilar($s1)->alquilar($s2);` - Method chaining |
+| ![8](Screenshots/8cap.png) | Excepción: Alquiler duplicado | Lanza `SoporteYaAlquiladoException` si intenta alquilar lo mismo dos veces |
+| ![9](Screenshots/9cap.png) | Control de cupo máximo | Lanza `CupoSuperadoException` al alcanzar límite de 3 alquileres |
+| ![10](Screenshots/10cap.png) | Devolución y re-alquiler | `$cliente->devolver(26)->alquilar($s3);` - Libera espacio e inmediatamente alquila otro |
+| ![11](Screenshots/11cap.png) | Listado de alquileres | `$cliente->getAlquileres();` - Array con todos los soportes actuales del cliente |
+| ![12](Screenshots/12cap.png) | Error en devolución | Lanza `SoporteNoEncontradoException` si intenta devolver soporte no alquilado |
 
-**Captura 7:** Alquileres exitosos
-![Captura 7](assets/screenshots/cap7.png)
-*Resultado de alquileres múltiples usando encadenamiento de métodos (method chaining).*
+**Conceptos clave:** 
+- **Fluent Interface**: Métodos devuelven `$this` para encadenamiento
+- **Excepciones personalizadas**: Control de errores de negocio
+- **Validaciones**: Previene estados inválidos (duplicados, cupo, devoluciones incorrectas)
 
-**Captura 8:** Validación de alquiler duplicado
-![Captura 8](assets/screenshots/cap8.png)
-*Manejo de excepción cuando se intenta alquilar un soporte ya alquilado.*
+---
 
-**Captura 9:** Control de cupo máximo
-![Captura 9](assets/screenshots/cap9.png)
-*Validación que impide superar el máximo de alquileres concurrentes permitidos.*
+### Sección 3: Gestión Completa del Videoclub (`inicio3.php`)
 
-**Captura 10:** Devolución y nuevo alquiler
-![Captura 10](assets/screenshots/cap10.png)
-*Proceso de devolución de soporte y alquiler de uno nuevo mediante encadenamiento.*
+Demuestra la clase `Videoclub` integrando múltiples clientes y soportes.
 
-**Captura 11:** Listado de alquileres actuales
-![Captura 11](assets/screenshots/cap11.png)
-*Consulta de todos los soportes alquilados actualmente por un cliente.*
+| Captura | Descripción | Código |
+|---------|-------------|--------|
+| ![13](Screenshots/13cap.png) | Videoclub inicializado | `new Videoclub("VideoClub Express");` - Instancia con nombre |
+| ![14](Screenshots/14cap.png) | Catálogo con 7 soportes | Agregación de CintaVideo, DVD, Juego usando `agregarSoporte($soporte)` |
+| ![15](Screenshots/15cap.png) | 3 clientes registrados | Clientes con diferentes cupos máximos (3, 4, 2) usando `agregarCliente($cliente, $cupo)` |
+| ![16](Screenshots/16cap.png) | Operaciones finales | Alquileres, validaciones de excepciones, devoluciones en flujo completo |
 
-**Captura 12:** Validaciones de devolución
-![Captura 12](assets/screenshots/cap12.png)
-*Manejo de intentos de devolver soportes que no existen en los alquileres.*
+**Concepto clave:** La clase `Videoclub` actúa como contenedor que gestiona todo el catálogo y la experiencia del usuario.
 
-### Sección 3: Gestión Completa del Videoclub (inicio3.php)
+---
 
-**Captura 13:** Inicialización del videoclub
-![Captura 13](assets/screenshots/cap13.png)
-*Creación del videoclub con nombre y estado inicial.*
+**Cómo ejecutar las pruebas:**
 
-**Captura 14:** Inclusión de productos en catálogo
-![Captura 14](assets/screenshots/cap14.png)
-*Adición de 7 productos variados (DVDs, juegos y cintas de vídeo) al catálogo.*
-
-**Captura 15:** Gestión de socios
-![Captura 15](assets/screenshots/cap15.png)
-*Registro de socios con diferentes cupos máximos de alquiler concurrente.*
-
-**Captura 16:** Alquileres y validaciones finales
-![Captura 16](assets/screenshots/cap16.png)
-*Demostración completa de operaciones: alquiler exitoso, validación de duplicados y control de cupo.*
+```bash
+# En tu navegador, accede a:
+http://localhost/Proyecto-Videoclub/test/inicio.php    # Sección 1
+http://localhost/Proyecto-Videoclub/test/inicio2.php   # Sección 2
+http://localhost/Proyecto-Videoclub/test/inicio3.php   # Sección 3
+```
 
 ---
 
