@@ -1,0 +1,38 @@
+{
+    "23": {
+        "nombre": "Bruce Wayne",
+        "numero": 23,
+        "usuario": "bruce.wayne",
+        "password": "$2y$10$Xny9lIM7WtxwEPVD4PuSuO1GJgcd1P0taU6iE6uztaDEzSTQ2PfH."
+    },
+    "33": {
+        "nombre": "Clark Kent",
+        "numero": 33,
+        "usuario": "clark.kent",
+        "password": "$2y$10$IHr7j71UnT0AVuYCvjzTUeRXUTT93UTbkDW2WsQBtwtiRiJFcgIA6"
+    },
+    "45": {
+        "nombre": "Diana Prince",
+        "numero": 45,
+        "usuario": "diana.prince",
+        "password": "$2y$10$.5Fr.PLrGfsJSkT67Sqrdu9csqdHosWgSd4V1g.quJdQndTdA8\/va"
+    },
+    "12": {
+        "nombre": "Barry Allen",
+        "numero": 12,
+        "usuario": "barry.allen",
+        "password": "$2y$10$3ZN3IhBTdH1UpG1wqwexduJolG0gLiBoxM0SYBmJlY7Bi\/tmEVkzu"
+    },
+    "56": {
+        "nombre": "Arthur Curry",
+        "numero": 56,
+        "usuario": "arthur.curry",
+        "password": "$2y$10$xQxjAxwIVpwuN8GaxKjxoOBXBkeq3jQLnu1PPmW\/1vsh\/\/TeTNo0a"
+    },
+    "57": {
+        "nombre": "David López",
+        "numero": 57,
+        "usuario": "dalofe23",
+        "password": "$2y$10$hCjQOaz4lLJJfnV5RY1pBuFoNl3ISUh8NJNm5cHwtdlIshdyyDQxi"
+    }
+}
