@@ -1,0 +1,12 @@
+# Permite archivos de imagen en screenshots
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+!*.webp
+
+# Pero ignora archivos temporales
+*.psd
+*.tmp
+*.cache
+*.DS_Store
