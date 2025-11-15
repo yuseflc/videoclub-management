@@ -6,6 +6,9 @@
  * un usuario y contraseña.
  */
 
+// Incluimos el autoload ANTES de session_start para que las clases estén disponibles
+require_once 'autoload.php';
+
 // Iniciamos la sesión. Las sesiones en PHP nos permiten mantener información
 // del usuario mientras navega por el sitio. Es como si le diéramos un "carnet"
 // que lo identifica durante su visita.
@@ -54,13 +57,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Comprobamos si el usuario es administrador
             // Si es admin, lo redirigimos a mainAdmin.php
-            // Si no, lo redirigimos a main.php
             if ($usuario === 'admin') {
                 header('Location: mainAdmin.php');
-            } else {
-                header('Location: main.php');
+                exit();
             }
-            exit();
+            
+            // Si no es admin, verificamos si es un cliente registrado
+            // Cargamos los datos de clientes de la sesión
+            if (!isset($_SESSION['clientes'])) {
+                // Si no hay clientes en la sesión, los cargamos desde mainAdmin
+                require_once 'mainAdmin.php';
+            }
+            
+            // Buscamos si el usuario coincide con algún cliente
+            $clientes = $_SESSION['clientes'];
+            $clienteEncontrado = null;
+            
+            foreach ($clientes as $cliente) {
+                if ($cliente->getUsuario() === $usuario) {
+                    $clienteEncontrado = $cliente;
+                    break;
+                }
+            }
+            
+            // Si es un cliente registrado, lo redirigimos a mainCliente.php
+            if ($clienteEncontrado !== null) {
+                $_SESSION['cliente'] = $clienteEncontrado;
+                header('Location: mainCliente.php');
+                exit();
+            } else {
+                // Si no es admin ni cliente, lo redirigimos a main.php
+                header('Location: main.php');
+                exit();
+            }
         } else {
             // Si no es correcto, mostramos error
             $mostrar_error = true;

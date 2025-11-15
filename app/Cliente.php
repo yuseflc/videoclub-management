@@ -57,6 +57,11 @@ class Cliente implements Resumible {
         return $this->numSoportesAlquilados;
     }
     
+    //Método que devuelve el array de soportes alquilados
+    public function getAlquileres() : array {
+        return $this->soportesAlquilados;
+    }
+    
     //Método que muestra el resumen del cliente
     public function muestraResumen() {
         echo "<br><strong>Cliente:</strong> " . $this->nombre . "<br>";
