@@ -42,12 +42,3 @@ build/
 *.sqlite
 *.sqlite3
 *.db
-
-# Archivos de imágenes que se generan o se usan temporalmente
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.webp
-*.svg
-*.ico

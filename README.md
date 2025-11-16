@@ -177,7 +177,7 @@ http://localhost/Proyecto-Videoclub/test/inicio3.php   # Sección 3
 
 <div align="center">
 
-**Desarrollado para aprender PHP y POO**
+**Desarrollado por David López Ferreras y Yusef Laroussi de la Calle**
 
 </div>
 
