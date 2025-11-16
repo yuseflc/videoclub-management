@@ -242,9 +242,14 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
                                             </span>
                                         </td>
                                         <td>
-                                            <!-- He creado estos dos botones: uno para editar y otro para ver detalles -->
+                                            <!-- He creado estos botones: editar, ver detalles y eliminar -->
                                             <a href="formUpdateCliente.php?id=<?php echo htmlspecialchars($id); ?>" class="btn-action" style="background-color: #3498db; text-decoration: none; padding: 6px 12px; display: inline-block;">Editar</a>
                                             <button class="btn-action" style="margin-left: 5px;">Ver detalles</button>
+                                            <!-- He agregado un formulario oculto para eliminar con confirmación JS -->
+                                            <form method="POST" action="removeCliente.php" style="display: inline;" onsubmit="return confirmarEliminacion('<?php echo htmlspecialchars($cliente->nombre); ?>');">
+                                                <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($id); ?>">
+                                                <button type="submit" class="btn-action" style="margin-left: 5px; background-color: #e74c3c;">Eliminar</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -370,6 +375,23 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
             <p>Videoclub - Sistema de Gestión</p>
         </footer>
     </div>
+
+    <!-- He creado una función JavaScript para confirmar la eliminación de un cliente -->
+    <script>
+        // Esta función se ejecuta cuando el usuario intenta eliminar un cliente
+        // Le pido confirmación antes de enviar el formulario al servidor
+        function confirmarEliminacion(nombreCliente) {
+            // He usado confirm() que muestra un cuadro de diálogo con dos botones: Aceptar y Cancelar
+            // Si el usuario hace clic en Aceptar, devuelvo true y el formulario se envía
+            // Si hace clic en Cancelar, devuelvo false y la eliminación se cancela
+            const confirmado = confirm('¿Estás seguro de que deseas eliminar a ' + nombreCliente + '? Esta acción no se puede deshacer.');
+            
+            // Devuelvo el resultado de la confirmación
+            // true = continuar con el envío del formulario
+            // false = cancelar el envío del formulario
+            return confirmado;
+        }
+    </script>
 </body>
 
 </html>
