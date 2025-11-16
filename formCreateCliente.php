@@ -55,7 +55,7 @@ $usuario_antiguo = isset($_GET['usuario']) ? htmlspecialchars($_GET['usuario']) 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cliente - Videoclub</title>
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/formCreate.css">
 </head>
 
 <body>
@@ -100,7 +100,7 @@ $usuario_antiguo = isset($_GET['usuario']) ? htmlspecialchars($_GET['usuario']) 
                             type="text" 
                             id="nombre" 
                             name="nombre" 
-                            placeholder="Ej: Juan García López"
+                            placeholder="Ej: Yusef Laroussi de la Calle"
                             value="<?php echo $nombre_antiguo; ?>"
                             required
                         >
@@ -113,7 +113,7 @@ $usuario_antiguo = isset($_GET['usuario']) ? htmlspecialchars($_GET['usuario']) 
                             type="text" 
                             id="usuario" 
                             name="usuario" 
-                            placeholder="Ej: juan.garcia"
+                            placeholder="Ej: yuseflc"
                             value="<?php echo $usuario_antiguo; ?>"
                             required
                         >

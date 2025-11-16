@@ -242,7 +242,9 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
                                             </span>
                                         </td>
                                         <td>
-                                            <button class="btn-action">Ver detalles</button>
+                                            <!-- He creado estos dos botones: uno para editar y otro para ver detalles -->
+                                            <a href="formUpdateCliente.php?id=<?php echo htmlspecialchars($id); ?>" class="btn-action" style="background-color: #3498db; text-decoration: none; padding: 6px 12px; display: inline-block;">Editar</a>
+                                            <button class="btn-action" style="margin-left: 5px;">Ver detalles</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

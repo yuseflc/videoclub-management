@@ -89,11 +89,17 @@ $alquileres = $cliente->getAlquileres();
         <main>
             <!-- SECCIÓN DE INFORMACIÓN DEL CLIENTE -->
             <section class="welcome-section">
-                <h2>Información de tu Cuenta</h2>
-                <div class="info-cliente">
-                    <p><strong>Nombre:</strong> <?php echo htmlspecialchars($cliente->nombre); ?></p>
-                    <p><strong>Usuario:</strong> <span class="badge badge-usuario"><?php echo htmlspecialchars($cliente->getUsuario()); ?></span></p>
-                    <p><strong>ID Cliente:</strong> <?php echo htmlspecialchars($cliente->getNumero()); ?></p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>Información de tu Cuenta</h2>
+                        <div class="info-cliente">
+                            <p><strong>Nombre:</strong> <?php echo htmlspecialchars($cliente->nombre); ?></p>
+                            <p><strong>Usuario:</strong> <span class="badge badge-usuario"><?php echo htmlspecialchars($cliente->getUsuario()); ?></span></p>
+                            <p><strong>ID Cliente:</strong> <?php echo htmlspecialchars($cliente->getNumero()); ?></p>
+                        </div>
+                    </div>
+                    <!-- He agregado un botón para editar los datos del cliente -->
+                    <a href="formUpdateCliente.php" class="btn-action" style="background-color: #3498db; text-decoration: none; padding: 10px 20px; display: inline-block; margin-top: 20px; height: fit-content;">Editar mis datos</a>
                 </div>
             </section>
 
