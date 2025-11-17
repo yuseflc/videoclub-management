@@ -164,13 +164,56 @@ Demuestra la clase `Videoclub` integrando múltiples clientes y soportes.
 
 ---
 
-**Cómo ejecutar las pruebas:**
+### Sección 4: Sistema Web - Login y Gestión de Clientes
+
+Interfaz web completa con autenticación y panel de administración para gestionar clientes.
+
+| Captura | Descripción |
+|---------|-------------|
+| ![17](Screenshots/17cap.png) | Página de login - Formulario de autenticación para admin y clientes |
+| ![18](Screenshots/18cap.png) | Panel de administración - Lista de clientes con opciones editar/eliminar |
+| ![19](Screenshots/19cap.png) | Panel de administración - Lista de clientes con opciones editar/eliminar |
+| ![20](Screenshots/20cap.png) | Descripcion del panel de administración - Lista de clientes con opciones editar/eliminar |
+| ![21](Screenshots/21cap.png) | Editar datos de cliente - Modificar nombre, usuario y contraseña (opcional) |
+| ![22](Screenshots/22cap.png) | Tras pulsar 'Eliminar cliente' |
+| ![23](Screenshots/23cap.png) | Tras pulsar '+ Crear cliente' Creacion de nuevo cliente |
+
+**Conceptos clave:**
+
+- **Autenticación**: Login diferencia entre admin (panel completo) y clientes (perfil personal)
+- **CRUD de clientes**: Crear, leer, actualizar, eliminar con validaciones
+- **Persistencia JSON**: Los datos se guardan en `data/clientes.json` entre sesiones
+- **Confirmación JavaScript**: Previene eliminaciones accidentales con `confirm()`
+- **Control de permisos**: Admin gestiona todos, clientes solo su perfil
+
+---
+
+**Cómo ejecutar la aplicación web:**
+
+```bash
+# En tu navegador, accede a:
+http://localhost/Proyecto-Videoclub/index.php
+
+# Credenciales de prueba:
+# Admin: usuario=admin, contraseña=admin
+# Clientes disponibles:
+#   usuario=bruce.wayne, contraseña=prueba1234
+#   usuario=pepe.fdez, contraseña=prueba1234
+#   usuario=ramon.dino, contraseña=prueba1234
+#   usuario=barry.allen, contraseña=prueba1234
+#   usuario=leo.messi, contraseña=prueba1234
+```
+
+---
+
+**Cómo ejecutar las pruebas de CLI:**
 
 ```bash
 # En tu navegador, accede a:
 http://localhost/Proyecto-Videoclub/test/inicio.php    # Sección 1
 http://localhost/Proyecto-Videoclub/test/inicio2.php   # Sección 2
 http://localhost/Proyecto-Videoclub/test/inicio3.php   # Sección 3
+http://localhost/Proyecto-Videoclub/index.php          # Seccion 4
 ```
 
 ---

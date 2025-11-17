@@ -94,11 +94,11 @@ if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
      * usuario y contraseña para poder acceder al sistema.
      * Los clientes tienen un límite de 3 alquileres concurrentes.
      */
-    $cliente1 = new Cliente("Bruce Wayne", 23, "bruce.wayne", "batman2024");
-    $cliente2 = new Cliente("Clark Kent", 33, "clark.kent", "superman2024");
-    $cliente3 = new Cliente("Diana Prince", 45, "diana.prince", "wonderwoman2024");
-    $cliente4 = new Cliente("Barry Allen", 12, "barry.allen", "flash2024");
-    $cliente5 = new Cliente("Arthur Curry", 56, "arthur.curry", "aquaman2024");
+    $cliente1 = new Cliente("Bruce Wayne", 23, "bruce.wayne", "prueba1234");
+    $cliente2 = new Cliente("Pepe Fernandez", 33, "pepe.fdez", "prueba1234");
+    $cliente3 = new Cliente("Ramon Dino", 45, "ramon.dino", "prueba1234");
+    $cliente4 = new Cliente("Barry Allen", 12, "barry.allen", "prueba1234");
+    $cliente5 = new Cliente("Leo Messi", 56, "leo.messi", "prueba1234");
     
     /**
      * Array asociativo de clientes
@@ -107,11 +107,11 @@ if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
      * y el valor es el objeto Cliente.
      */
     $clientes_array = array(
-        23 => $cliente1,  // Bruce Wayne
-        33 => $cliente2,  // Clark Kent
-        45 => $cliente3,  // Diana Prince
-        12 => $cliente4,  // Barry Allen
-        56 => $cliente5   // Arthur Curry
+        23 => $cliente1,
+        33 => $cliente2,
+        45 => $cliente3,
+        12 => $cliente4,
+        56 => $cliente5
     );
     
     /**
