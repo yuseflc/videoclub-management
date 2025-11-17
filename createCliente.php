@@ -98,11 +98,11 @@ if (!empty($usuario) && empty(array_filter($errores))) {
 if (!empty($errores)) {
     // Construimos el mensaje de error
     $mensaje_error = 'Errores en el formulario: ' . implode(', ', $errores);
-    
+
     // Redirigimos con los datos originales para que el usuario no pierda lo escrito
-    header('Location: formCreateCliente.php?error=' . urlencode($mensaje_error) . 
-           '&nombre=' . urlencode($nombre) . 
-           '&usuario=' . urlencode($usuario));
+    header('Location: formCreateCliente.php?error=' . urlencode($mensaje_error) .
+        '&nombre=' . urlencode($nombre) .
+        '&usuario=' . urlencode($usuario));
     exit();
 }
 
@@ -128,4 +128,3 @@ $_SESSION['clientes'][$id_nuevo] = $nuevo_cliente;
 // Redirigimos a mainAdmin.php donde se verá el cliente creado
 header('Location: mainAdmin.php');
 exit();
-?>

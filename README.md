@@ -177,6 +177,7 @@ Interfaz web completa con autenticación y panel de administración para gestion
 | ![21](Screenshots/21cap.png) | Editar datos de cliente - Modificar nombre, usuario y contraseña (opcional) |
 | ![22](Screenshots/22cap.png) | Tras pulsar 'Eliminar cliente' |
 | ![23](Screenshots/23cap.png) | Tras pulsar '+ Crear cliente' Creacion de nuevo cliente |
+| ![24](Screenshots/24cap.png) | Al iniciar sesion como usuario muestra los soportes alquilados |
 
 **Conceptos clave:**
 

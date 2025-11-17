@@ -56,13 +56,7 @@ class Cliente implements Resumible {
     }
     
     public function setPassword($password) {
-        // Si la contraseña ya está hasheada (empieza con $2y$ típico de bcrypt), la asignamos directamente
-        // Si no, la hasheamos
-        if (substr($password, 0, 4) === '$2y$' || substr($password, 0, 4) === '$2a$' || substr($password, 0, 4) === '$2b$') {
-            $this->password = $password;
-        } else {
-            $this->password = password_hash($password, PASSWORD_DEFAULT);
-        }
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function getNumSoportesAlquilados() {
@@ -113,8 +107,6 @@ class Cliente implements Resumible {
         $this->soportesAlquilados[] = $s; //Añado el soporte al array
         $this->numSoportesAlquilados++; //Incremento el contador
         $s->alquilado = true; //Marco el soporte como alquilado
-        echo "<br>Alquilado soporte a: " . $this->nombre . "<br>";
-        echo $s->titulo . "<br>";
         //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
         return $this;
     }
@@ -132,7 +124,6 @@ class Cliente implements Resumible {
                 //Reindexo el array para evitar huecos
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 $soporte->alquilado = false; //Marco el soporte como no alquilado
-                echo "<br>Devuelto soporte: " . $soporte->titulo . "<br>";
                 //Devuelvo $this para permitir el encadenamiento de métodos
                 return $this;
             }

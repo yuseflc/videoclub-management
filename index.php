@@ -9,10 +9,56 @@
 // Incluimos el autoload ANTES de session_start para que las clases estén disponibles
 require_once 'autoload.php';
 
+// Importamos las clases que usaremos para inicializar clientes
+use Dwes\ProyectoVideoclub\Cliente;
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
+
 // Iniciamos la sesión. Las sesiones en PHP nos permiten mantener información
 // del usuario mientras navega por el sitio. Es como si le diéramos un "carnet"
 // que lo identifica durante su visita.
 session_start();
+
+/**
+ * FUNCIÓN PARA INICIALIZAR CLIENTES Y SOPORTES
+ * Si no existen en sesión, los creamos automáticamente
+ */
+function inicializarClientesYSoportes() {
+    if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
+        // Crear soportes
+        $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
+        $soporte2 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
+        $soporte3 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);
+        $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en", "16:9");
+        $soporte5 = new CintaVideo("Blade Runner", 5, 4.5, 117);
+        $soporte6 = new Juego("Elden Ring", 27, 59.99, "PS5", 1, 1);
+        
+        $soportes_array = array(
+            23 => $soporte1, 24 => $soporte2, 26 => $soporte3,
+            4 => $soporte4, 5 => $soporte5, 27 => $soporte6
+        );
+        
+        // Crear clientes
+        $cliente1 = new Cliente("Bruce Wayne", 23, "bruce.wayne", "prueba1234");
+        $cliente2 = new Cliente("Pepe Fernandez", 33, "pepe.fdez", "prueba1234");
+        $cliente3 = new Cliente("Ramon Dino", 45, "ramon.dino", "prueba1234");
+        $cliente4 = new Cliente("Barry Allen", 12, "barry.allen", "prueba1234");
+        $cliente5 = new Cliente("Leo Messi", 56, "leo.messi", "prueba1234");
+        
+        // Agregar algunos alquileres a Leo Messi para demostración
+        $cliente5->alquilar($soporte1)->alquilar($soporte2);
+        
+        $clientes_array = array(
+            23 => $cliente1, 33 => $cliente2, 45 => $cliente3,
+            12 => $cliente4, 56 => $cliente5
+        );
+        
+        // Guardar en sesión
+        $_SESSION['soportes'] = $soportes_array;
+        $_SESSION['clientes'] = $clientes_array;
+    }
+}
 
 // Si el usuario ya está logueado (tiene una sesión activa), lo redirigimos
 // directamente a main.php para que no vuelva a ver el login.
@@ -24,6 +70,9 @@ if (isset($_SESSION['usuario'])) {
     header('Location: main.php');
     exit();
 }
+
+// Inicializamos clientes y soportes si no existen
+inicializarClientesYSoportes();
 
 // Variables para mostrar mensajes de error
 $mostrar_error = false;  // Bandera para saber si hay error
@@ -61,41 +110,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } 
         // Si devuelve 'cliente', intentamos validar como cliente
         else if ($resultado === 'cliente') {
-            // Si no hay clientes en sesión, significa que necesitan inicializarse
-            // Lo cual solo ocurre si el admin inicia sesión primero
-            if (!isset($_SESSION['clientes'])) {
-                $mostrar_error = true;
-                $mensaje_error = 'No hay clientes disponibles. Inicia sesión como admin primero.';
-            } else {
-                // Buscamos si el usuario coincide con algún cliente
-                $clientes = $_SESSION['clientes'];
-                $clienteEncontrado = null;
-                
-                foreach ($clientes as $cliente) {
-                    if ($cliente->getUsuario() === $usuario) {
-                        $clienteEncontrado = $cliente;
-                        break;
-                    }
+            // Buscamos si el usuario coincide con algún cliente
+            // Los clientes ya fueron inicializados al cargar esta página
+            $clientes = $_SESSION['clientes'];
+            $clienteEncontrado = null;
+            
+            foreach ($clientes as $cliente) {
+                if ($cliente->getUsuario() === $usuario) {
+                    $clienteEncontrado = $cliente;
+                    break;
                 }
-                
-                // Si es un cliente registrado, lo redirigimos a mainCliente.php
-                if ($clienteEncontrado !== null) {
-                    // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
-                    if (password_verify($password, $clienteEncontrado->getPassword())) {
-                        $_SESSION['usuario'] = $usuario;
-                        $_SESSION['cliente'] = $clienteEncontrado;
-                        header('Location: mainCliente.php');
-                        exit();
-                    } else {
-                        // Contraseña incorrecta
-                        $mostrar_error = true;
-                        $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
-                    }
+            }
+            
+            // Si es un cliente registrado, lo redirigimos a mainCliente.php
+            if ($clienteEncontrado !== null) {
+                // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
+                if (password_verify($password, $clienteEncontrado->getPassword())) {
+                    $_SESSION['usuario'] = $usuario;
+                    $_SESSION['cliente'] = $clienteEncontrado;
+                    header('Location: mainCliente.php');
+                    exit();
                 } else {
-                    // Usuario no encontrado en clientes, mostrar error
+                    // Contraseña incorrecta
                     $mostrar_error = true;
                     $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
                 }
+            } else {
+                // Usuario no encontrado en clientes, mostrar error
+                $mostrar_error = true;
+                $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
             }
         } 
         else {
