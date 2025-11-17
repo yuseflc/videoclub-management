@@ -66,14 +66,6 @@ if ($id_cliente === null || !isset($_SESSION['clientes'][$id_cliente])) {
 unset($_SESSION['clientes'][$id_cliente]);
 
 /**
- * GUARDAR CAMBIOS DE FORMA PERSISTENTE
- * 
- * Guardo los clientes restantes en el archivo JSON
- * para que la eliminación persista entre diferentes sesiones
- */
-guardar_clientes($_SESSION['clientes']);
-
-/**
  * REDIRIGIR AL LISTADO
  * 
  * Redirigimos al administrador de vuelta al listado de clientes
