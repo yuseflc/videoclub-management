@@ -50,25 +50,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Le pasamos el usuario y contraseña para que los verifique
         $resultado = verificarLogin($usuario, $password);
         
-        // Si verificarLogin() devuelve true, el usuario es correcto
+        // Si verificarLogin() devuelve true, es el administrador
         if ($resultado === true) {
             // Guardamos el usuario en la sesión
             $_SESSION['usuario'] = $usuario;
             
-            // Comprobamos si el usuario es administrador
-            // Si es admin, lo redirigimos a mainAdmin.php
-            if ($usuario === 'admin') {
-                header('Location: mainAdmin.php');
-                exit();
-            }
-            
-            // Si no es admin, buscamos si coincide con algún cliente de la sesión
-            // Primero comprobamos que la sesión de clientes existe
+            // Es admin, lo redirigimos a mainAdmin.php
+            header('Location: mainAdmin.php');
+            exit();
+        } 
+        // Si devuelve 'cliente', intentamos validar como cliente
+        else if ($resultado === 'cliente') {
+            // Si no hay clientes en sesión, significa que necesitan inicializarse
+            // Lo cual solo ocurre si el admin inicia sesión primero
             if (!isset($_SESSION['clientes'])) {
-                // Si no hay clientes en sesión, significa que necesitan inicializarse
-                // Lo cual solo ocurre si el admin inicia sesión primero
                 $mostrar_error = true;
-                $mensaje_error = 'No hay clientes disponibles. Contacte con administración.';
+                $mensaje_error = 'No hay clientes disponibles. Inicia sesión como admin primero.';
             } else {
                 // Buscamos si el usuario coincide con algún cliente
                 $clientes = $_SESSION['clientes'];
@@ -85,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($clienteEncontrado !== null) {
                     // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
                     if (password_verify($password, $clienteEncontrado->getPassword())) {
+                        $_SESSION['usuario'] = $usuario;
                         $_SESSION['cliente'] = $clienteEncontrado;
                         header('Location: mainCliente.php');
                         exit();
@@ -99,7 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
                 }
             }
-        } else {
+        } 
+        else {
             // Si no es correcto, mostramos error
             $mostrar_error = true;
             $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';

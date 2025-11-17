@@ -8,16 +8,15 @@
  * EXPLICACIÓN:
  * Esta función es como un vigilante que comprueba si tienes permiso
  * para entrar. Compara lo que escribiste con los datos válidos que tenemos guardados.
+ * 
+ * Para admin: verifica contra un array hardcodeado
+ * Para clientes: solo verifica que sea admin (los clientes se verifican después en index.php)
  */
 function verificarLogin($usuario, $password) {
-    // En una aplicación real, los usuarios estarían guardados en una base de datos.
-    // Pero para aprender, vamos a usar un array simple con los usuarios válidos.
-    
     // Array asociativo: es como un diccionario donde la clave es el usuario
-    // y el valor es la contraseña
+    // y el valor es la contraseña. Solo contiene el admin.
     $usuarios_validos = array(
-        'admin' => 'admin',      // Primer usuario válido: admin / admin
-        'usuario' => 'usuario'   // Segundo usuario válido: usuario / usuario
+        'admin' => 'admin'      // Admin: admin / admin
     );
     
     // Comprobamos si el usuario que escribió existe en nuestra lista
@@ -30,7 +29,9 @@ function verificarLogin($usuario, $password) {
         }
     }
     
-    // Si llegamos aquí, algo no coincide: usuario no existe o contraseña incorrecta
-    return false;
+    // Si no es admin, simplemente devolvemos true como indicador de que NO es admin
+    // La validación real de clientes se hace en index.php contra la sesión
+    // Así permitimos que el flujo continúe para buscar el cliente en sesión
+    return 'cliente'; // Indicador de que no es admin pero podría ser cliente
 }
 ?>
