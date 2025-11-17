@@ -242,9 +242,8 @@ if (isset($_GET['logout']) && $_GET['logout'] === '1') {
                                             </span>
                                         </td>
                                         <td>
-                                            <!-- He creado estos botones: editar, ver detalles y eliminar -->
+                                            <!-- He creado estos botones: editar y eliminar. Antes tenia provisionalmente el de ver detalles -->
                                             <a href="formUpdateCliente.php?id=<?php echo htmlspecialchars($id); ?>" class="btn-action" style="background-color: #3498db; text-decoration: none; padding: 6px 12px; display: inline-block;">Editar</a>
-                                            <button class="btn-action" style="margin-left: 5px;">Ver detalles</button>
                                             <!-- He agregado un formulario oculto para eliminar con confirmación JS -->
                                             <form method="POST" action="removeCliente.php" style="display: inline;" onsubmit="return confirmarEliminacion('<?php echo htmlspecialchars($cliente->nombre); ?>');">
                                                 <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($id); ?>">
