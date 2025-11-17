@@ -11,9 +11,6 @@
 // Incluimos el autoload ANTES de session_start
 require_once 'autoload.php';
 
-// Incluimos el archivo de gestión de persistencia de clientes
-require_once 'clientesData.php';
-
 // Iniciamos la sesión
 session_start();
 
@@ -127,14 +124,6 @@ $nuevo_cliente = new Cliente($nombre, $id_nuevo, $usuario, $password);
 
 // Lo añadimos al array de clientes en la sesión
 $_SESSION['clientes'][$id_nuevo] = $nuevo_cliente;
-
-/**
- * GUARDAR CLIENTE DE FORMA PERSISTENTE
- * 
- * Guardamos el cliente en el archivo JSON para que persista
- * entre diferentes sesiones y logins.
- */
-guardar_clientes($_SESSION['clientes']);
 
 // Redirigimos a mainAdmin.php donde se verá el cliente creado
 header('Location: mainAdmin.php');

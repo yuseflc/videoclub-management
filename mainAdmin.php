@@ -18,9 +18,6 @@
 // cuando PHP deserialice los objetos guardados en la sesión
 require_once 'autoload.php';
 
-// Incluimos el archivo de gestión de persistencia de clientes
-require_once 'clientesData.php';
-
 // Iniciamos la sesión (igual que en index.php)
 // Necesitamos hacer esto en TODAS las páginas donde queremos usar $_SESSION
 session_start();
@@ -113,25 +110,6 @@ if (!isset($_SESSION['clientes']) || !isset($_SESSION['soportes'])) {
         12 => $cliente4,
         56 => $cliente5
     );
-    
-    /**
-     * CARGA DE CLIENTES PERSISTIDOS
-     * 
-     * Cargamos los clientes que han sido creados por el administrador
-     * y guardados en el archivo JSON de persistencia.
-     */
-    $clientes_persistidos = cargar_clientes_persistidos();
-    foreach ($clientes_persistidos as $id => $datos) {
-        // Reconstruimos el objeto Cliente desde los datos persistidos
-        $cliente_persistido = new Cliente(
-            $datos['nombre'],
-            $datos['numero'],
-            $datos['usuario'],
-            $datos['password']
-        );
-        // Lo añadimos al array (puede sobrescribir si el ID coincide)
-        $clientes_array[$id] = $cliente_persistido;
-    }
     
     /**
      * Almacenamos los arrays en la sesión

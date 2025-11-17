@@ -8,7 +8,6 @@
 
 // Incluimos el autoload ANTES de session_start para que las clases estén disponibles
 require_once 'autoload.php';
-require_once 'clientesData.php';
 
 // Iniciamos la sesión. Las sesiones en PHP nos permiten mantener información
 // del usuario mientras navega por el sitio. Es como si le diéramos un "carnet"
@@ -63,61 +62,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
             
-            // Si no es admin, verificamos si es un cliente registrado
-            // Cargamos los datos de clientes de la sesión
+            // Si no es admin, buscamos si coincide con algún cliente de la sesión
+            // Primero comprobamos que la sesión de clientes existe
             if (!isset($_SESSION['clientes'])) {
-                // Si no hay clientes en la sesión, los cargamos desde mainAdmin
-                require_once 'mainAdmin.php';
-            }
-            
-            // También cargamos los clientes persistidos
-            $datosClientesPeristidos = cargar_clientes_persistidos();
-            if (!empty($datosClientesPeristidos)) {
-                foreach ($datosClientesPeristidos as $numero => $datosCliente) {
-                    // Creamos un objeto Cliente con los datos persistidos
-                    $clientePersistido = new \Dwes\ProyectoVideoclub\Cliente(
-                        $datosCliente['nombre'],
-                        $numero,
-                        $datosCliente['usuario'],
-                        $datosCliente['password']
-                    );
-                    // Establecemos la contraseña ya hasheada usando el setter
-                    $clientePersistido->setPassword($datosCliente['password']);
-                    
-                    // Agregamos el cliente persistido a la sesión
-                    $_SESSION['clientes'][$numero] = $clientePersistido;
+                // Si no hay clientes en sesión, significa que necesitan inicializarse
+                // Lo cual solo ocurre si el admin inicia sesión primero
+                $mostrar_error = true;
+                $mensaje_error = 'No hay clientes disponibles. Contacte con administración.';
+            } else {
+                // Buscamos si el usuario coincide con algún cliente
+                $clientes = $_SESSION['clientes'];
+                $clienteEncontrado = null;
+                
+                foreach ($clientes as $cliente) {
+                    if ($cliente->getUsuario() === $usuario) {
+                        $clienteEncontrado = $cliente;
+                        break;
+                    }
                 }
-            }
-            
-            // Buscamos si el usuario coincide con algún cliente
-            $clientes = $_SESSION['clientes'];
-            $clienteEncontrado = null;
-            $passwordEncontrada = null;
-            
-            foreach ($clientes as $cliente) {
-                if ($cliente->getUsuario() === $usuario) {
-                    $clienteEncontrado = $cliente;
-                    $passwordEncontrada = $cliente->getPassword();
-                    break;
-                }
-            }
-            
-            // Si es un cliente registrado, lo redirigimos a mainCliente.php
-            if ($clienteEncontrado !== null) {
-                // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
-                if (password_verify($password, $passwordEncontrada)) {
-                    $_SESSION['cliente'] = $clienteEncontrado;
-                    header('Location: mainCliente.php');
-                    exit();
+                
+                // Si es un cliente registrado, lo redirigimos a mainCliente.php
+                if ($clienteEncontrado !== null) {
+                    // Verificamos la contraseña usando password_verify para las contraseñas hasheadas
+                    if (password_verify($password, $clienteEncontrado->getPassword())) {
+                        $_SESSION['cliente'] = $clienteEncontrado;
+                        header('Location: mainCliente.php');
+                        exit();
+                    } else {
+                        // Contraseña incorrecta
+                        $mostrar_error = true;
+                        $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
+                    }
                 } else {
-                    // Contraseña incorrecta
+                    // Usuario no encontrado en clientes, mostrar error
                     $mostrar_error = true;
                     $mensaje_error = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
                 }
-            } else {
-                // Si no es admin ni cliente, lo redirigimos a main.php
-                header('Location: main.php');
-                exit();
             }
         } else {
             // Si no es correcto, mostramos error

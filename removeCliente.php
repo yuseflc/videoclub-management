@@ -16,9 +16,6 @@
 // Incluyo el autoload ANTES de session_start para que las clases estén disponibles
 require_once 'autoload.php';
 
-// Incluyo el archivo de persistencia de clientes
-require_once 'clientesData.php';
-
 // Inicio la sesión
 session_start();
 
@@ -63,14 +60,6 @@ if ($id_cliente === null || !isset($_SESSION['clientes'][$id_cliente])) {
  * He removido el cliente del array de clientes en la sesión
  */
 unset($_SESSION['clientes'][$id_cliente]);
-
-/**
- * GUARDAR CAMBIOS DE FORMA PERSISTENTE
- * 
- * Guardo los clientes restantes en el archivo JSON
- * para que la eliminación persista entre diferentes sesiones
- */
-guardar_clientes($_SESSION['clientes']);
 
 /**
  * REDIRIGIR AL LISTADO

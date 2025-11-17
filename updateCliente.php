@@ -14,9 +14,6 @@
 // Incluyo el autoload ANTES de session_start
 require_once 'autoload.php';
 
-// Incluyo el archivo de persistencia de clientes
-require_once 'clientesData.php';
-
 // Inicio la sesión
 session_start();
 
@@ -173,14 +170,6 @@ $cliente->setUsuario($usuario);
 if (!empty($password)) {
     $cliente->setPassword($password);
 }
-
-/**
- * GUARDAR CAMBIOS DE FORMA PERSISTENTE
- * 
- * Guardo el cliente en el archivo JSON para que persista
- * entre diferentes sesiones y logins.
- */
-guardar_clientes($_SESSION['clientes']);
 
 /**
  * SI ES CLIENTE, ACTUALIZO LA SESIÓN
