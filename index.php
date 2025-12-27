@@ -8,7 +8,6 @@
 
 // Incluimos el autoload de Composer ANTES de session_start para que las clases estén disponibles
 require_once 'vendor/autoload.php';
-require_once 'clientesData.php';
 
 // Importamos las clases que usaremos para inicializar clientes
 use Dwes\ProyectoVideoclub\Cliente;
