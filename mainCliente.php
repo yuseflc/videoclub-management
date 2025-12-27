@@ -13,8 +13,8 @@
  * - Opción de cerrar sesión
  */
 
-// Incluimos el autoload ANTES de session_start para que las clases estén disponibles
-require_once 'autoload.php';
+// Incluimos el autoload de Composer ANTES de session_start para que las clases estén disponibles
+require_once 'vendor/autoload.php';
 
 // Iniciamos la sesión
 session_start();
