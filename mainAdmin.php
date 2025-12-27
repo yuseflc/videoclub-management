@@ -14,9 +14,9 @@
  * - Página de bienvenida para administrador
  */
 
-// Incluimos el autoload ANTES de session_start para que las clases estén disponibles
+// Incluimos el autoload de Composer ANTES de session_start para que las clases estén disponibles
 // cuando PHP deserialice los objetos guardados en la sesión
-require_once 'autoload.php';
+require_once 'vendor/autoload.php';
 
 // Iniciamos la sesión (igual que en index.php)
 // Necesitamos hacer esto en TODAS las páginas donde queremos usar $_SESSION

@@ -6,14 +6,9 @@
  * un usuario y contraseña.
  */
 
-// Incluimos el autoload ANTES de session_start para que las clases estén disponibles
-require_once 'autoload.php';
-
-// Importamos las clases que usaremos para inicializar clientes
-use Dwes\ProyectoVideoclub\Cliente;
-use Dwes\ProyectoVideoclub\CintaVideo;
-use Dwes\ProyectoVideoclub\Dvd;
-use Dwes\ProyectoVideoclub\Juego;
+// Incluimos el autoload de Composer ANTES de session_start para que las clases estén disponibles
+require_once 'vendor/autoload.php';
+require_once 'clientesData.php';
 
 // Iniciamos la sesión. Las sesiones en PHP nos permiten mantener información
 // del usuario mientras navega por el sitio. Es como si le diéramos un "carnet"

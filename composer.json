@@ -1,0 +1,26 @@
+{
+    "name": "videoclub/management",
+    "description": "Sistema de gestión de videoclub en PHP con POO",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yusef Laroussi de la Calle"
+        },
+        {
+            "name": "David López Ferreras"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "monolog/monolog": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dwes\\ProyectoVideoclub\\": "app/"
+        }
+    }
+}

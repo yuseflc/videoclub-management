@@ -6,6 +6,9 @@
  * "privada" que solo pueden ver los usuarios autenticados.
  */
 
+// Incluimos el autoload de Composer
+require_once 'vendor/autoload.php';
+
 // Iniciamos la sesión (igual que en index.php)
 // Necesitamos hacer esto en TODAS las páginas donde queremos usar $_SESSION
 session_start();
