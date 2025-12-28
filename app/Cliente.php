@@ -11,6 +11,10 @@ use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 
+//Importo Monolog para el logging
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 //Creo la clase Cliente que implementa Resumible
 class Cliente implements Resumible {
     public $nombre;
@@ -20,6 +24,7 @@ class Cliente implements Resumible {
     private $soportesAlquilados = []; //Array que guarda los soportes alquilados
     private $numSoportesAlquilados = 0; //Contador de alquileres
     private $maxAlquilerConcurrente;
+    private $logger; //Logger de Monolog
     
     //Constructor
     //maxAlquilerConcurrente es opcional y por defecto vale 3
@@ -30,6 +35,17 @@ class Cliente implements Resumible {
         //Codificamos la contraseña usando password_hash() para mayor seguridad
         $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
+        
+        //Inicializo el logger de Monolog
+        $this->logger = new Logger('VideoclubLogger');
+        //Creo el directorio de logs si no existe
+        $logDir = __DIR__ . '/../logs';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+        //Añado el manejador de stream para escribir en el archivo logs/videoclub.log
+        //Nivel DEBUG incluye todos los mensajes desde debug en adelante
+        $this->logger->pushHandler(new StreamHandler($logDir . '/videoclub.log', Logger::DEBUG));
     }
     
 
@@ -93,12 +109,16 @@ class Cliente implements Resumible {
     public function alquilar(Soporte $s) {
         //Compruebo si ya tiene alquilado este soporte
         if ($this->tieneAlquilado($s)) {
+            //Lanzo log de warning antes de la excepción
+            $this->logger->warning("Intento de alquilar un soporte ya alquilado: " . $s->titulo);
             //Lanzo una excepción SoporteYaAlquiladoException
             throw new SoporteYaAlquiladoException("El cliente ya tiene alquilado el soporte: " . $s->titulo);
         }
         
         //Compruebo si ha superado el cupo de alquileres
         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
+            //Lanzo log de warning antes de la excepción
+            $this->logger->warning("Cliente ha superado el cupo de alquileres. Alquileres actuales: " . count($this->soportesAlquilados));
             //Lanzo una excepción CupoSuperadoException
             throw new CupoSuperadoException("Este cliente tiene " . count($this->soportesAlquilados) . " elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo.");
         }
@@ -107,6 +127,8 @@ class Cliente implements Resumible {
         $this->soportesAlquilados[] = $s; //Añado el soporte al array
         $this->numSoportesAlquilados++; //Incremento el contador
         $s->alquilado = true; //Marco el soporte como alquilado
+        //Registra el alquiler en el log
+        $this->logger->info("Soporte alquilado: " . $s->titulo . " por cliente " . $this->nombre);
         //Devuelvo $this para permitir el encadenamiento de métodos (fluent interface)
         return $this;
     }
@@ -124,16 +146,21 @@ class Cliente implements Resumible {
                 //Reindexo el array para evitar huecos
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 $soporte->alquilado = false; //Marco el soporte como no alquilado
+                //Registra la devolución en el log
+                $this->logger->info("Soporte devuelto: " . $soporte->titulo . " por cliente " . $this->nombre);
                 //Devuelvo $this para permitir el encadenamiento de métodos
                 return $this;
             }
         }
-        //Si no lo encuentra, lanzo una excepción SoporteNoEncontradoException
+        //Si no lo encuentra, lanzo log de warning antes de la excepción
+        $this->logger->warning("Intento de devolver soporte no encontrado. Número de soporte: " . $numSoporte);
+        //Lanzo una excepción SoporteNoEncontradoException
         throw new SoporteNoEncontradoException("No se ha podido encontrar el soporte en los alquileres de este cliente");
     }
     
     //Método para listar los alquileres del cliente
     public function listarAlquileres() {
+        $this->logger->info("Se muestran los alquileres del cliente " . $this->nombre . ". Total: " . count($this->soportesAlquilados));
         echo "<br>El cliente tiene " . count($this->soportesAlquilados) . " soportes alquilados<br>";
         //Recorro el array y muestro cada soporte
         foreach ($this->soportesAlquilados as $soporte) {

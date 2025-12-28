@@ -14,7 +14,8 @@ El autoload funciona así:
 Esto hace el código más limpio y fácil de mantener.
 */
 
-//Registro mi función de autoload usando spl_autoload_register
+//Primero incluyo el autoload de Composer para que cargue las dependencias (Monolog, etc.)
+require_once __DIR__ . '/vendor/autoload.php';
 //Esta función se ejecutará automáticamente cuando PHP necesite una clase que no ha sido cargada
 spl_autoload_register(function ($nombreClase) {
     

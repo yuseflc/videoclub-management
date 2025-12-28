@@ -12,6 +12,10 @@ use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Util\ClienteNoEncontradoException;
 
+//Importo Monolog para el logging
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 //Creo la clase Videoclub
 class Videoclub {
     //Atributos
@@ -22,10 +26,22 @@ class Videoclub {
     private $numSocios = 0;
     private $numProductosAlquilados = 0; //Contador de productos que están alquilados actualmente
     private $numTotalAlquileres = 0; //Contador total de alquileres realizados (histórico)
+    private $logger; //Logger de Monolog
     
     //Constructor
     public function __construct($nombre) {
         $this->nombre = $nombre;
+        
+        //Inicializo el logger de Monolog
+        $this->logger = new Logger('VideoclubLogger');
+        //Creo el directorio de logs si no existe
+        $logDir = __DIR__ . '/../logs';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+        //Añado el manejador de stream para escribir en el archivo logs/videoclub.log
+        //Nivel DEBUG incluye todos los mensajes desde debug en adelante
+        $this->logger->pushHandler(new StreamHandler($logDir . '/videoclub.log', Logger::DEBUG));
     }
     
     //Getter para obtener el número de productos alquilados actualmente
@@ -42,7 +58,7 @@ class Videoclub {
     private function incluirProducto(Soporte $producto) {
         $this->productos[] = $producto;
         $this->numProductos++;
-        echo "<br>Incluido soporte " . $this->numProductos . "<br>";
+        $this->logger->info("Producto incluido", ["numero" => $this->numProductos, "titulo" => $producto->titulo]);
     }
     
     //Método público para incluir una CintaVideo
@@ -74,11 +90,12 @@ class Videoclub {
         $socio = new Cliente($nombre, $this->numSocios + 1, $usuario, $password, $maxAlquilerConcurrente);
         $this->socios[] = $socio;
         $this->numSocios++;
-        echo "<br>Incluido socio " . $this->numSocios . "<br>";
+        $this->logger->info("Socio incluido", ["numero" => $this->numSocios, "nombre" => $nombre, "usuario" => $usuario]);
     }
     
     //Método para listar los productos del videoclub
     public function listarProductos() {
+        $this->logger->info("Se listan los productos del videoclub", ["total_productos" => $this->numProductos]);
         echo "<br>Listado de los " . $this->numProductos . " productos disponibles:<br>";
         foreach ($this->productos as $producto) {
             $producto->muestraResumen();
@@ -87,6 +104,7 @@ class Videoclub {
     
     //Método para listar los socios del videoclub
     public function listarSocios() {
+        $this->logger->info("Se listan los socios del videoclub", ["total_socios" => $this->numSocios]);
         echo "<br>Listado de los " . $this->numSocios . " socios del videoclub:<br>";
         foreach ($this->socios as $socio) {
             $socio->muestraResumen();
@@ -109,6 +127,7 @@ class Videoclub {
         
         //Si no encuentro el cliente, lanzo excepción ClienteNoEncontradoException
         if ($cliente == null) {
+            $this->logger->warning("Intento de alquiler con cliente no encontrado", ["numero_cliente" => $numeroCliente]);
             throw new ClienteNoEncontradoException("No existe el cliente con número " . $numeroCliente);
         }
         
@@ -123,6 +142,7 @@ class Videoclub {
         
         //Si no encuentro el soporte, lanzo excepción SoporteNoEncontradoException
         if ($soporte == null) {
+            $this->logger->warning("Intento de alquiler con soporte no encontrado", ["numero_soporte" => $numeroSoporte]);
             throw new SoporteNoEncontradoException("No existe el soporte con número " . $numeroSoporte);
         }
         
@@ -133,11 +153,14 @@ class Videoclub {
             //Si el alquiler se realiza correctamente, incremento los contadores
             $this->numProductosAlquilados++; //Incremento productos alquilados actualmente
             $this->numTotalAlquileres++; //Incremento el total histórico de alquileres
+            $this->logger->info("Alquiler realizado", ["cliente" => $cliente->nombre, "soporte" => $soporte->titulo, "total_alquileres" => $this->numTotalAlquileres]);
         } catch (SoporteYaAlquiladoException $e) {
             //Informo al usuario si el soporte ya está alquilado
+            $this->logger->warning("Error en alquiler: soporte ya alquilado", ["cliente" => $numeroCliente, "soporte" => $numeroSoporte]);
             echo "<br>Error: " . $e->getMessage() . "<br>";
         } catch (CupoSuperadoException $e) {
             //Informo al usuario si ha superado el cupo
+            $this->logger->warning("Error en alquiler: cupo superado", ["cliente" => $numeroCliente]);
             echo "<br>Error: " . $e->getMessage() . "<br>";
         }
         
@@ -159,6 +182,7 @@ class Videoclub {
         
         //Si no encuentro el cliente, lanzo excepción
         if ($cliente == null) {
+            $this->logger->warning("Intento de devolución con cliente no encontrado", ["numero_cliente" => $numSocio]);
             throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
         }
         
@@ -167,8 +191,10 @@ class Videoclub {
             $cliente->devolver($numeroProducto);
             //Si la devolución se realiza correctamente, decremento el contador
             $this->numProductosAlquilados--; //Disminuyo productos alquilados actualmente
+            $this->logger->info("Devolución realizada", ["cliente" => $cliente->nombre, "numero_producto" => $numeroProducto]);
         } catch (SoporteNoEncontradoException $e) {
             //Informo al usuario si no se encuentra el soporte
+            $this->logger->warning("Error en devolución: soporte no encontrado", ["cliente" => $numSocio, "numero_producto" => $numeroProducto]);
             echo "<br>Error: " . $e->getMessage() . "<br>";
         }
         
@@ -191,6 +217,7 @@ class Videoclub {
         
         //Si no encuentro el cliente, lanzo excepción
         if ($cliente == null) {
+            $this->logger->warning("Intento de alquiler múltiple con cliente no encontrado", ["numero_cliente" => $numSocio, "cantidad_productos" => count($numerosProductos)]);
             throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
         }
         
@@ -210,12 +237,14 @@ class Videoclub {
             
             //Si no encuentro el soporte, lanzo excepción
             if ($soporteEncontrado == null) {
+                $this->logger->warning("Alquiler múltiple: soporte no encontrado", ["numero_soporte" => $numeroProducto]);
                 throw new SoporteNoEncontradoException("No existe el soporte con número " . $numeroProducto);
             }
             
             //Compruebo si el soporte ya está alquilado
             if ($soporteEncontrado->alquilado == true) {
                 //Si está alquilado, no alquilo ninguno y muestro mensaje
+                $this->logger->warning("Alquiler múltiple cancelado: soporte ya alquilado", ["cliente" => $numSocio, "soporte_alquilado" => $soporteEncontrado->titulo]);
                 echo "<br>Error: El soporte " . $soporteEncontrado->titulo . " ya está alquilado. No se realizará ningún alquiler.<br>";
                 return $this; //Salgo del método sin alquilar nada
             }
@@ -233,11 +262,14 @@ class Videoclub {
                 //Si el alquiler funciona, incremento los contadores
                 $this->numProductosAlquilados++;
                 $this->numTotalAlquileres++;
+                $this->logger->info("Alquiler múltiple: soporte alquilado", ["cliente" => $cliente->nombre, "soporte" => $soporte->titulo]);
             } catch (SoporteYaAlquiladoException $e) {
                 //Si ya lo tenía alquilado este cliente, informo
+                $this->logger->warning("Alquiler múltiple: soporte ya alquilado", ["cliente" => $numSocio, "soporte" => $soporte->titulo]);
                 echo "<br>Error: " . $e->getMessage() . "<br>";
             } catch (CupoSuperadoException $e) {
                 //Si supera el cupo, informo y paro de alquilar
+                $this->logger->warning("Alquiler múltiple: cupo superado", ["cliente" => $numSocio]);
                 echo "<br>Error: " . $e->getMessage() . "<br>";
                 break; //Salgo del bucle para no intentar alquilar más
             }
@@ -261,6 +293,7 @@ class Videoclub {
         
         //Si no encuentro el cliente, lanzo excepción
         if ($cliente == null) {
+            $this->logger->warning("Intento de devolución múltiple con cliente no encontrado", ["numero_cliente" => $numSocio, "cantidad_productos" => count($numerosProductos)]);
             throw new ClienteNoEncontradoException("No existe el cliente con número " . $numSocio);
         }
         
@@ -271,8 +304,10 @@ class Videoclub {
                 $cliente->devolver($numeroProducto);
                 //Si la devolución funciona, decremento el contador
                 $this->numProductosAlquilados--; //Disminuyo productos alquilados actualmente
+                $this->logger->info("Devolución múltiple: producto devuelto", ["cliente" => $cliente->nombre, "numero_producto" => $numeroProducto]);
             } catch (SoporteNoEncontradoException $e) {
                 //Si no encuentra el soporte, informo y continúo con el siguiente
+                $this->logger->warning("Devolución múltiple: soporte no encontrado", ["cliente" => $numSocio, "numero_producto" => $numeroProducto]);
                 echo "<br>Error: " . $e->getMessage() . "<br>";
             }
         }
