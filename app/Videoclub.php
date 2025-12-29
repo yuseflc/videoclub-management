@@ -12,9 +12,8 @@ use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Util\ClienteNoEncontradoException;
 
-//Importo Monolog para el logging
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+//Importo la factoría de logs
+use Dwes\ProyectoVideoclub\Util\LogFactory;
 
 //Creo la clase Videoclub
 class Videoclub {
@@ -32,16 +31,8 @@ class Videoclub {
     public function __construct($nombre) {
         $this->nombre = $nombre;
         
-        //Inicializo el logger de Monolog
-        $this->logger = new Logger('VideoclubLogger');
-        //Creo el directorio de logs si no existe
-        $logDir = __DIR__ . '/../logs';
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
-        }
-        //Añado el manejador de stream para escribir en el archivo logs/videoclub.log
-        //Nivel DEBUG incluye todos los mensajes desde debug en adelante
-        $this->logger->pushHandler(new StreamHandler($logDir . '/videoclub.log', Logger::DEBUG));
+        //Inicializo el logger usando la factoría
+        $this->logger = LogFactory::createLogger('VideoclubLogger');
     }
     
     //Getter para obtener el número de productos alquilados actualmente

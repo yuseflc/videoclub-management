@@ -11,9 +11,8 @@ use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 
-//Importo Monolog para el logging
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+//Importo la factoría de logs
+use Dwes\ProyectoVideoclub\Util\LogFactory;
 
 //Creo la clase Cliente que implementa Resumible
 class Cliente implements Resumible {
@@ -36,16 +35,8 @@ class Cliente implements Resumible {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
         
-        //Inicializo el logger de Monolog
-        $this->logger = new Logger('VideoclubLogger');
-        //Creo el directorio de logs si no existe
-        $logDir = __DIR__ . '/../logs';
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
-        }
-        //Añado el manejador de stream para escribir en el archivo logs/videoclub.log
-        //Nivel DEBUG incluye todos los mensajes desde debug en adelante
-        $this->logger->pushHandler(new StreamHandler($logDir . '/videoclub.log', Logger::DEBUG));
+        //Inicializo el logger usando la factoría
+        $this->logger = LogFactory::createLogger('VideoclubLogger');
     }
     
 
