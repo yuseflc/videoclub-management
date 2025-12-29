@@ -4,6 +4,7 @@ namespace Dwes\ProyectoVideoclub\Util;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Psr\Log\LoggerInterface;
 
 /**
  * LogFactory - Factoría para crear loggers de Monolog
@@ -41,9 +42,9 @@ class LogFactory {
      * - Añade el handler de escritura en archivo
      * 
      * @param string $loggerName Nombre del logger (para identificar en los logs)
-     * @return Logger Logger configurado y listo para usar
+     * @return LoggerInterface Logger configurado y listo para usar
      */
-    public static function createLogger($loggerName = 'VideoclubLogger') {
+    public static function createLogger($loggerName = 'VideoclubLogger'): LoggerInterface {
         // Si no se ha inicializado el directorio, usamos la ruta por defecto
         if (self::$logDir === null) {
             self::$logDir = __DIR__ . '/../../logs';
