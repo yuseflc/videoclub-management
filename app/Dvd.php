@@ -24,10 +24,12 @@ class Dvd extends Soporte {
     //Sobrescribo muestraResumen
     public function muestraResumen() {
         //Llamo al método del padre
-        parent::muestraResumen();
+        $resumen = parent::muestraResumen();
         //Añado la info del DVD
-        echo "Idiomas: " . $this->idiomas . "<br>";
-        echo "Formato Pantalla: " . $this->formatoPantalla . "<br>";
+        $infoDvd = "Idiomas: " . $this->idiomas . "<br>";
+        $infoDvd .= "Formato Pantalla: " . $this->formatoPantalla . "<br>";
+        echo $infoDvd;
+        return $resumen . $infoDvd;
     }
 }
 

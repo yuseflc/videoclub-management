@@ -24,9 +24,11 @@ class CintaVideo extends Soporte {
     //Sobrescribo el método muestraResumen para añadir la info de la duración
     public function muestraResumen() {
         //Llamo primero al método del padre para mostrar la info básica (título, número, precio)
-        parent::muestraResumen();
+        $resumen = parent::muestraResumen();
         //Después añado la duración que es específica de la cinta de vídeo
-        echo "Duración: " . $this->duracion . " minutos<br>";
+        $duracion = "Duración: " . $this->duracion . " minutos<br>";
+        echo $duracion;
+        return $resumen . $duracion;
     }
 }
 

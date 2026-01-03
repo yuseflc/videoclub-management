@@ -41,4 +41,4 @@ build/
 # Bases de datos locales (por si uso SQLite en pruebas)
 *.sqlite
 *.sqlite3
-*.db
+*.db.phpunit.result.cache

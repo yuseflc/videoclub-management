@@ -48,13 +48,15 @@ abstract class Soporte implements Resumible {
     
     //Este método muestra un resumen con toda la información del soporte
     public function muestraResumen() {
-        echo "<br><br>";
-        echo "<strong>Resumen del Soporte:</strong><br>";
-        echo "Título: " . $this->titulo . "<br>";
-        echo "Número: " . $this->numero . "<br>";
-        echo "Precio: " . $this->precio . " euros<br>";
+        $resumen = "<br><br>";
+        $resumen .= "<strong>Resumen del Soporte:</strong><br>";
+        $resumen .= "Título: " . $this->titulo . "<br>";
+        $resumen .= "Número: " . $this->numero . "<br>";
+        $resumen .= "Precio: " . $this->precio . " euros<br>";
         //Uso el método getPrecioConIVA() para mostrar el precio con IVA
-        echo "Precio con IVA: " . $this->getPrecioConIVA() . " euros<br>";
+        $resumen .= "Precio con IVA: " . $this->getPrecioConIVA() . " euros<br>";
+        echo $resumen;
+        return $resumen;
     }
 }
 

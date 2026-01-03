@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="autoload.php"
+         colors="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Videoclub Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">app</directory>
+        </include>
+        <exclude>
+            <directory>vendor</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="coverage"/>
+            <text outputFile="php://stdout" showUncoveredFiles="true"/>
+        </report>
+    </coverage>
+</phpunit>

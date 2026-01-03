@@ -25,28 +25,33 @@ class Juego extends Soporte {
     
     //Método para mostrar los jugadores posibles
     public function muestraJugadoresPosibles() {
+        $mensaje = "";
         //Si el mínimo y el máximo son iguales a 1
         if ($this->minNumJugadores == 1 && $this->maxNumJugadores == 1) {
-            echo "Para un jugador<br>";
+            $mensaje = "Para un jugador<br>";
         }
         //Si el mínimo y el máximo son iguales pero no son 1
         else if ($this->minNumJugadores == $this->maxNumJugadores) {
-            echo "Para " . $this->maxNumJugadores . " jugadores<br>";
+            $mensaje = "Para " . $this->maxNumJugadores . " jugadores<br>";
         }
         //Si el mínimo y el máximo son diferentes
         else {
-            echo "De " . $this->minNumJugadores . " a " . $this->maxNumJugadores . " jugadores<br>";
+            $mensaje = "De " . $this->minNumJugadores . " a " . $this->maxNumJugadores . " jugadores<br>";
         }
+        echo $mensaje;
+        return $mensaje;
     }
     
     //Sobrescribo muestraResumen
     public function muestraResumen() {
         //Llamo al método del padre
-        parent::muestraResumen();
+        $resumen = parent::muestraResumen();
         //Añado la info del Juego
-        echo "Consola: " . $this->consola . "<br>";
+        $infoJuego = "Consola: " . $this->consola . "<br>";
+        echo $infoJuego;
         //Llamo al método muestraJugadoresPosibles
-        $this->muestraJugadoresPosibles();
+        $infoJugadores = $this->muestraJugadoresPosibles();
+        return $resumen . $infoJuego . $infoJugadores;
     }
 }
 
